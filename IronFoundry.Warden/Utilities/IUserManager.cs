@@ -2,6 +2,7 @@
 
 namespace IronFoundry.Warden.Utilities
 {
+    // BR: Move this to IronFoundry.Container
     public interface IUserManager
     {
         NetworkCredential CreateUser(string userName);

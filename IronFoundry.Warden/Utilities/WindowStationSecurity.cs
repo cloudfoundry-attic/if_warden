@@ -9,6 +9,7 @@ using IronFoundry.Warden.PInvoke;
 
 namespace IronFoundry.Warden.Utilities
 {
+    // BR: Move this to IronFoundry.Container
     class WindowStationSecurity : ObjectSecurity<NativeMethods.WindowStationRights>
     {
         private SafeHandle hWindowStation;

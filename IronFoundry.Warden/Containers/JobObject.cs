@@ -8,6 +8,7 @@
     using IronFoundry.Warden.PInvoke;
     using Microsoft.Win32.SafeHandles;
 
+    // BR: Move this to IronFoundry.Container.Shared
     public class CpuStatistics
     {
         public TimeSpan TotalKernelTime { get; set; }

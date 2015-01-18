@@ -12,6 +12,7 @@ using NLog;
 
 namespace IronFoundry.Warden.Containers
 {
+    // BR: Move to IronFoundry.Container
     public interface IContainerHostLauncher
     {
         event EventHandler<int> HostStopped;
@@ -28,11 +29,13 @@ namespace IronFoundry.Warden.Containers
             where TResult : JsonRpcResponse;
     }
 
+    // BR: Move to IronFoundry.Container
     public class ContainerHostLauncher : IDisposable, IContainerHostLauncher, IContainerJanitor
     {
         private const int CleanUpWaitTime = 60000;
         private readonly Logger log = LogManager.GetCurrentClassLogger();
 
+        // BR: Rename to IronFoundry.Container.Host
         string hostExe = "IronFoundry.Warden.ContainerHost.exe";
         Process hostProcess;
         MessageTransport messageTransport;

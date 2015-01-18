@@ -10,6 +10,8 @@ using IronFoundry.Warden.Utilities;
 
 namespace IronFoundry.Warden.Containers
 {
+    // BR: Move to IronFoundry.Container.Shared
+    // BR: Might make sense to split the functionality between the library and the host
     public class ContainerStub : IContainer, IDisposable
     {
         const int ExitTimeout = 10000;

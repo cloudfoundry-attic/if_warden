@@ -6,6 +6,7 @@
     using System.Net.NetworkInformation;
     using System.Net.Sockets;
 
+    // BR: Move this to IronFoundry.Container
     public class IPUtilities
     {
         public static ushort RandomFreePort()

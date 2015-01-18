@@ -5,6 +5,7 @@
     using System.Security.Principal;
     using IronFoundry.Warden.PInvoke;
 
+    // BR: Move this to IronFoundry.Container.Shared 
     public static class Impersonator
     {
         public static WindowsImpersonationContext GetContext(NetworkCredential credential, bool shouldImpersonate = false)

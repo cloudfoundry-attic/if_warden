@@ -5,12 +5,14 @@
     using System.Runtime.InteropServices;
     using System.Security.AccessControl;
 
+    // BR: Move this to IronFoundry.Container
     public interface IDesktopPermissionManager
     {
         void AddDesktopPermission(string userName);
         void RemoveDesktopPermission(string userName);
     }
 
+    // BR: Move this to IronFoundry.Container
     public class DesktopPermissionManager : IDesktopPermissionManager
     {
         // No need to close handle.

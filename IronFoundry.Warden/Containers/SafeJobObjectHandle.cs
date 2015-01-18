@@ -4,6 +4,7 @@ using System;
 
 namespace IronFoundry.Warden.Containers
 {
+    // BR: Move this to IronFoundry.Container.Shared
     public class SafeJobObjectHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
         public SafeJobObjectHandle(IntPtr handle)
@@ -18,6 +19,7 @@ namespace IronFoundry.Warden.Containers
         }
     }
 
+    // BR: Move this to IronFoundry.Container.Shared
     public class JobObjectWaitHandle : System.Threading.WaitHandle
     {
         public JobObjectWaitHandle(SafeJobObjectHandle jobObject) 

@@ -10,6 +10,7 @@ using System.Diagnostics;
 
 namespace IronFoundry.Warden.Utilities
 {
+    // BR: Move this to IronFoundry.Container
     public class LocalPrincipalManager : IUserManager
     {
         const int NERR_Success = 0;

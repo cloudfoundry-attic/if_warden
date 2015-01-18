@@ -3,6 +3,7 @@ using NLog;
 
 namespace IronFoundry.Warden.Utilities
 {
+    // BR: Move this to IronFoundry.Container
     public class LocalTcpPortManager : ILocalTcpPortManager
     {
         private readonly IFirewallManager firewallManager;

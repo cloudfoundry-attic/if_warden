@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace IronFoundry.Warden.Utilities
 {
+    // BR: Move this to IronFoundry.Container
     class DesktopSecurity : ObjectSecurity<NativeMethods.DesktopRights>
     {
         private SafeHandle hDesktopHandle;

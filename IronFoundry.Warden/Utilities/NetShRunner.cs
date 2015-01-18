@@ -3,6 +3,8 @@ using NLog;
 
 namespace IronFoundry.Warden.Utilities
 {
+    // BR: Move this to IronFoundry.Container
+    // BR: Don't use BackgroundProcess, convert to use one of the newer process helpers (IProcess, ProcessHelper, etc).
     public class NetShRunner : INetShRunner
     {
         private static readonly string workingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.System);

@@ -2,6 +2,7 @@
 {
     using System;
 
+    // BR: Move this to IronFoundry.Container
     public class LocalPrincipalData
     {
         private readonly string userName;

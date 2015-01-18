@@ -9,6 +9,7 @@ using ICSharpCode.SharpZipLib.Tar;
 
 namespace IronFoundry.Warden.Utilities
 {
+    // BR: Move this to IronFoundry.Container
     public class PlatformFileSystem
     {
         public virtual void Copy(string source, string destination, bool overwrite)
@@ -253,6 +254,7 @@ namespace IronFoundry.Warden.Utilities
         }
     }
 
+    // BR: Move this to IronFoundry.Container
     public class FileSystemManager
     {
         private readonly PlatformFileSystem fileSystem;

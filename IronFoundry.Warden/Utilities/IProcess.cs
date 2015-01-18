@@ -3,6 +3,7 @@ using System.Diagnostics;
 
 namespace IronFoundry.Warden.Utilities
 {
+    // BR: Move this to IronFoundry.Container.Shared
     public interface IProcess : IDisposable
     {
         int ExitCode { get; }
