@@ -58,6 +58,8 @@
     <Compile Include="..\shared\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ContainerService.cs" />
+    <Compile Include="IContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
