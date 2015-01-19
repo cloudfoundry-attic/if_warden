@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using IronFoundry.Container;
 using IronFoundry.Warden.Configuration;
 using IronFoundry.Warden.Utilities;
 using IronFoundry.Warden.Containers.Messages;

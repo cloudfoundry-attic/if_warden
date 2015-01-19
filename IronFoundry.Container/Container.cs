@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IronFoundry.Warden.Containers;
+using IronFoundry.Warden.Utilities;
 
 namespace IronFoundry.Container
 {
@@ -10,7 +12,7 @@ namespace IronFoundry.Container
     {
         //string ContainerDirectoryPath { get; }
         //string ContainerUserName { get; }
-        //ContainerHandle Handle { get; }
+        string Handle { get; }
         //ContainerState State { get; }
 
         //void BindMounts(IEnumerable<BindMount> mounts);
@@ -32,5 +34,33 @@ namespace IronFoundry.Container
 
     public class Container : IContainer
     {
+        readonly string handle;
+        readonly IContainerUser user;
+        //readonly IContainerDirectory directory;
+        //readonly ILocalTcpPortManager tcpPortManager;
+
+        public Container(
+            string handle,
+            IContainerUser user
+            //, IContainerDirectory directory, IContainerUser user, ILocalTcpPortManager tcpPortManager, IContainerHostLauncher hostLauncher
+            )
+        {
+            this.handle = handle;
+            this.user = user;
+            //this.directory = directory;
+            //this.user = user;
+            //this.tcpPortManager = tcpPortManager;
+        }
+
+        public string Handle
+        {
+            get { return handle; }
+        }
+
+        public void Initialize()
+        {
+            // Start the 'host' process
+            // Initialize the host (or wait for the host to initialize if it's implicit)
+        }
     }
 }

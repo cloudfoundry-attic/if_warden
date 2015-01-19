@@ -11,6 +11,7 @@ namespace IronFoundry.Warden.Containers
     using System.Collections.Generic;
     using System.IO;
     using System.Security.AccessControl;
+    using IronFoundry.Container;
     using IronFoundry.Warden.Configuration;
     using IronFoundry.Warden.Containers.Messages;
 

@@ -254,6 +254,12 @@ namespace IronFoundry.Warden.Utilities
         }
     }
 
+    public class UserAccess
+    {
+        public string UserName { get; set; }
+        public FileAccess Access { get; set; }
+    }
+
     // BR: Move this to IronFoundry.Container
     public class FileSystemManager
     {
@@ -266,6 +272,11 @@ namespace IronFoundry.Warden.Utilities
         public FileSystemManager(PlatformFileSystem fileSystem)
         {
             this.fileSystem = fileSystem;
+        }
+
+        public virtual void CreateDirectory(string path, IEnumerable<UserAccess> access)
+        {
+            throw new NotImplementedException();
         }
 
         public virtual void CopyFile(string sourceFilePath, string destinationFilePath)

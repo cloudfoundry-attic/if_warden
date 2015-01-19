@@ -1,4 +1,4 @@
-﻿using IronFoundry.Warden.PInvoke;
+﻿using IronFoundry.Container.Win32;
 using Microsoft.Win32.SafeHandles;
 using System;
 

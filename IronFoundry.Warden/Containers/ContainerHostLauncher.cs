@@ -13,23 +13,6 @@ using NLog;
 namespace IronFoundry.Warden.Containers
 {
     // BR: Move to IronFoundry.Container
-    public interface IContainerHostLauncher
-    {
-        event EventHandler<int> HostStopped;
-        event EventHandler<LogEventArgs> LogEvent;
-
-        int HostProcessId { get; }
-        bool IsActive { get; }
-        bool WasActive { get; }
-        int? LastExitCode { get; }
-        void Start(string workingDirectory, string jobObjectName);
-        void Stop();
-        Task<TResult> SendMessageAsync<T, TResult>(T request)
-            where T : JsonRpcRequest
-            where TResult : JsonRpcResponse;
-    }
-
-    // BR: Move to IronFoundry.Container
     public class ContainerHostLauncher : IDisposable, IContainerHostLauncher, IContainerJanitor
     {
         private const int CleanUpWaitTime = 60000;
@@ -220,11 +203,5 @@ namespace IronFoundry.Warden.Containers
 
             return Task.FromResult<object>(null);
         }
-    }
-
-    public class LogEventArgs : EventArgs
-    {
-        public LogMessage.MessageType Type { get; set; }
-        public string Data { get; set; }
     }
 }
