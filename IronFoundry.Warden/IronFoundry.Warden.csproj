@@ -112,13 +112,11 @@
     <Compile Include="PInvoke\LookupAccountSid.cs" />
     <Compile Include="PInvoke\GetTokenInformation.cs" />
     <Compile Include="PInvoke\OpenProcessToken.cs" />
-    <Compile Include="PInvoke\DuplicateTokenEx.cs" />
     <Compile Include="PInvoke\Enums.cs" />
     <Compile Include="PInvoke\GetCurrentThreadId.cs" />
     <Compile Include="PInvoke\GetLengthSid.cs" />
     <Compile Include="PInvoke\GetProcessWindowStation.cs" />
     <Compile Include="PInvoke\GetThreadDesktop.cs" />
-    <Compile Include="PInvoke\LogonUser.cs" />
     <Compile Include="PInvoke\NativeMethods.cs" />
     <Compile Include="Tasks\CommandResult.cs" />
     <Compile Include="Tasks\CommandRunner.cs" />
@@ -130,10 +128,6 @@
     <Compile Include="Utilities\LoggedIEnumerableExtensionMethods.cs" />
     <Compile Include="Utilities\FirewallManager.cs" />
     <Compile Include="Utilities\ProcessExtensionMethods.cs" />
-    <Compile Include="PInvoke\RevertToSelf.cs" />
-    <Compile Include="PInvoke\SafeUserTokenHandle.cs" />
-    <Compile Include="PInvoke\SecurityAttributes.cs" />
-    <Compile Include="PInvoke\Utils.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -174,7 +168,6 @@
     <Compile Include="Server\TcpServer.cs" />
     <Compile Include="Tasks\WebApplicationCommand.cs" />
     <Compile Include="Utilities\DesktopPermissionManager.cs" />
-    <Compile Include="Utilities\Impersonator.cs" />
     <Compile Include="Utilities\IPUtilities.cs" />
     <Compile Include="Utilities\LocalPrincipalManager.cs" />
     <Compile Include="Tasks\TaskRunner.cs" />

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using IronFoundry.Container;
+using IronFoundry.Container.Win32;
 using IronFoundry.Warden.Containers.Messages;
 using IronFoundry.Warden.Tasks;
 using IronFoundry.Warden.Utilities;

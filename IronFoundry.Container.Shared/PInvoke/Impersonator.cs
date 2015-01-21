@@ -1,9 +1,8 @@
-﻿namespace IronFoundry.Warden.Utilities
+﻿namespace IronFoundry.Container.Win32
 {
     using System;
     using System.Net;
     using System.Security.Principal;
-    using IronFoundry.Warden.PInvoke;
 
     // BR: Move this to IronFoundry.Container.Shared 
     public static class Impersonator

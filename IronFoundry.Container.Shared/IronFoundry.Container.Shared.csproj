@@ -67,6 +67,9 @@
     <Compile Include="IContainerUser.cs" />
     <Compile Include="ILocalTcpPortManager.cs" />
     <Compile Include="ContainerProcess.cs" />
+    <Compile Include="PInvoke\DuplicateTokenEx.cs" />
+    <Compile Include="PInvoke\Enums.cs" />
+    <Compile Include="PInvoke\Impersonator.cs" />
     <Compile Include="IProcess.cs" />
     <Compile Include="IUserManager.cs" />
     <Compile Include="JobObject.cs" />
@@ -82,7 +85,12 @@
     <Compile Include="PInvoke\Console.cs" />
     <Compile Include="PInvoke\Constants.cs" />
     <Compile Include="PInvoke\JobObject.cs" />
+    <Compile Include="PInvoke\LogonUser.cs" />
     <Compile Include="PInvoke\NativeMethods.cs" />
+    <Compile Include="PInvoke\RevertToSelf.cs" />
+    <Compile Include="PInvoke\SafeUserTokenHandle.cs" />
+    <Compile Include="PInvoke\SecurityAttributes.cs" />
+    <Compile Include="PInvoke\Utils.cs" />
     <Compile Include="ProcessDataReceivedEventArgs.cs" />
     <Compile Include="ProcessHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

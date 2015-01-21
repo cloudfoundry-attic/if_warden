@@ -6,6 +6,7 @@ using System.Net;
 using System.Security.AccessControl;
 using ICSharpCode.SharpZipLib.GZip;
 using ICSharpCode.SharpZipLib.Tar;
+using IronFoundry.Container.Win32;
 
 namespace IronFoundry.Warden.Utilities
 {
@@ -254,12 +255,6 @@ namespace IronFoundry.Warden.Utilities
         }
     }
 
-    public class UserAccess
-    {
-        public string UserName { get; set; }
-        public FileAccess Access { get; set; }
-    }
-
     // BR: Move this to IronFoundry.Container
     public class FileSystemManager
     {
@@ -272,11 +267,6 @@ namespace IronFoundry.Warden.Utilities
         public FileSystemManager(PlatformFileSystem fileSystem)
         {
             this.fileSystem = fileSystem;
-        }
-
-        public virtual void CreateDirectory(string path, IEnumerable<UserAccess> access)
-        {
-            throw new NotImplementedException();
         }
 
         public virtual void CopyFile(string sourceFilePath, string destinationFilePath)
@@ -378,7 +368,7 @@ namespace IronFoundry.Warden.Utilities
         /// <summary>
         /// Returns true if the path refers to an existing directory.
         /// </summary>
-        internal bool DirectoryExists(string path)
+        public bool DirectoryExists(string path)
         {
             return fileSystem.DirectoryExists(path);
         }
@@ -386,7 +376,7 @@ namespace IronFoundry.Warden.Utilities
         /// <summary>
         /// Get the access that the specified user has to the specified directory.
         /// </summary>
-        internal FileAccess GetEffectiveDirectoryAccess(string directory, NetworkCredential credential)
+        public FileAccess GetEffectiveDirectoryAccess(string directory, NetworkCredential credential)
         {
             // TODO Modify this so it doesn't require the network credentials, only the username.
 
@@ -438,7 +428,7 @@ namespace IronFoundry.Warden.Utilities
         /// <summary>
         /// Create a directory with the specified user access
         /// </summary>
-        public void CreateDirectory(string path, IEnumerable<UserAccess> userAccess)
+        public virtual void CreateDirectory(string path, IEnumerable<UserAccess> userAccess)
         {
             IEnumerable<FileSystemAccessRule> rules = userAccess.SelectMany(ua => GetAccessControlRules(ua.Access, ua.UserName));
 
@@ -451,7 +441,7 @@ namespace IronFoundry.Warden.Utilities
             fileSystem.CreateDirectory(path, security);
         }
 
-        public void AddDirectoryAccess(string path, FileAccess access, string user)
+        public virtual void AddDirectoryAccess(string path, FileAccess access, string user)
         {
             DirectorySecurity security = fileSystem.GetDirectoryAccessSecurity(path);
 
