@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="ContainerCreationServiceTests.cs" />
     <Compile Include="ContainerHandleGeneratorTests.cs" />
+    <Compile Include="ContainerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

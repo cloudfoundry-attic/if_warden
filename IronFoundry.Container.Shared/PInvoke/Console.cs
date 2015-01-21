@@ -1,4 +1,4 @@
-﻿namespace IronFoundry.Warden.PInvoke
+﻿namespace IronFoundry.Container.Win32
 {
     using System;
     using System.Runtime.InteropServices;

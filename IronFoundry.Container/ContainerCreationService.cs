@@ -62,22 +62,28 @@ namespace IronFoundry.Container
 
     public class ContainerCreationService : IContainerCreationService
     {
+        readonly string containerBasePath;
         readonly FileSystemManager fileSystem;
         readonly IUserManager userManager;
-        readonly string containerBasePath;
-        //readonly string containerUsersGroupName;
+        readonly ILocalTcpPortManager tcpPortManager;
+        readonly IProcessRunner localProcessRunner;
+        readonly IProcessRunner remoteProcessRunner;
 
         public ContainerCreationService(
             IUserManager userManager,
             FileSystemManager fileSystem,
+            ILocalTcpPortManager tcpPortManager,
+            IProcessRunner localProcessRunner,
+            IProcessRunner remoteProcessRunner,
             string containerBasePath
-            //, string containerUsersGroupName
             )
         {
             this.userManager = userManager;
             this.fileSystem = fileSystem;
+            this.tcpPortManager = tcpPortManager;
+            this.localProcessRunner = localProcessRunner;
+            this.remoteProcessRunner = remoteProcessRunner;
             this.containerBasePath = containerBasePath;
-            //this.containerUsersGroupName = containerUsersGroupName;
         }
 
         public IContainer CreateContainer(ContainerSpec containerSpec)
@@ -91,7 +97,7 @@ namespace IronFoundry.Container
             var user = ContainerUser.Create(userManager, handle);
             var directory = ContainerDirectory.Create(fileSystem, containerBasePath, handle, user);
 
-            return new Container(handle, user);
+            return new Container(handle, user, directory, tcpPortManager, localProcessRunner, remoteProcessRunner);
         }
 
         public void Dispose()

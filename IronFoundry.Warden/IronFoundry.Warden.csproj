@@ -71,7 +71,6 @@
     <Compile Include="Containers\Messages\StopMessage.cs" />
     <Compile Include="Containers\ProcessMonitor.cs" />
     <Compile Include="Handlers\LoggingRequestHandler.cs" />
-    <Compile Include="PInvoke\Console.cs" />
     <Compile Include="PInvoke\DesktopRights.cs" />
     <Compile Include="PInvoke\IoCompletionPort.cs" />
     <Compile Include="PInvoke\StandardRights.cs" />
@@ -81,7 +80,6 @@
     <Compile Include="Utilities\IFirewallManager.cs" />
     <Compile Include="Utilities\INetShRunner.cs" />
     <Compile Include="Utilities\NetShRunner.cs" />
-    <Compile Include="Utilities\ProcessDataReceivedEventArgs.cs" />
     <Compile Include="Handlers\ContainerRequestHandler.cs" />
     <Compile Include="Handlers\CopyRequestHandler.cs" />
     <Compile Include="Handlers\CopyInRequestHandler.cs" />
@@ -128,7 +126,6 @@
     <Compile Include="Tasks\RemoteCommand.cs" />
     <Compile Include="Utilities\ContainerExtensions.cs" />
     <Compile Include="Utilities\IFilePermissionManager.cs" />
-    <Compile Include="Utilities\IProcess.cs" />
     <Compile Include="Utilities\LocalPrincipalData.cs" />
     <Compile Include="Utilities\LoggedIEnumerableExtensionMethods.cs" />
     <Compile Include="Utilities\FirewallManager.cs" />
@@ -184,7 +181,6 @@
     <Compile Include="Utilities\LocalTcpPortManager.cs" />
     <Compile Include="Utilities\LoggerExtensionMethods.cs" />
     <Compile Include="Utilities\MessageWriter.cs" />
-    <Compile Include="Utilities\ProcessHelper.cs" />
     <Compile Include="Utilities\Statics.cs" />
     <Compile Include="Utilities\TempFile.cs" />
     <Compile Include="Server\Buffer.cs" />

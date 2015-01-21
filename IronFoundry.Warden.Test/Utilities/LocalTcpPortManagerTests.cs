@@ -32,7 +32,7 @@ namespace IronFoundry.Warden.Test
                 var tcpPortManager = new LocalTcpPortManager(FirewallManager, NetShRunner);
                 NetShRunner.AddRule(Arg.Any<ushort>(), Arg.Any<string>()).ReturnsForAnyArgs(true);
 
-                ushort port = tcpPortManager.ReserveLocalPort(8888, "userName");
+                var port = tcpPortManager.ReserveLocalPort(8888, "userName");
 
                 NetShRunner.Received().AddRule(Arg.Is((ushort)8888), Arg.Is("userName"));
                 FirewallManager.Received().OpenPort(Arg.Is((ushort)8888), Arg.Is("userName"));
@@ -45,7 +45,7 @@ namespace IronFoundry.Warden.Test
                 var tcpPortManager = new LocalTcpPortManager(FirewallManager, NetShRunner);
                 NetShRunner.AddRule(Arg.Any<ushort>(), Arg.Any<string>()).ReturnsForAnyArgs(true);
 
-                ushort port = tcpPortManager.ReserveLocalPort(0, "userName");
+                var port = tcpPortManager.ReserveLocalPort(0, "userName");
 
                 Assert.True(port > 0);
             }

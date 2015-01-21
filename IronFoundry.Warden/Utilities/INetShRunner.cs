@@ -3,7 +3,7 @@
     // BR: Move this to IronFoundry.Container
     public interface INetShRunner
     {
-        bool AddRule(ushort port, string userName);
-        bool DeleteRule(ushort port);
+        bool AddRule(int port, string userName);
+        bool DeleteRule(int port);
     }
 }

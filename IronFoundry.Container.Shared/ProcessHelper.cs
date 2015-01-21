@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using IronFoundry.Warden.PInvoke;
+using IronFoundry.Container.Win32;
 
 namespace IronFoundry.Warden.Utilities
 {

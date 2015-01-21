@@ -10,13 +10,13 @@ namespace IronFoundry.Warden.Utilities
         private static readonly string workingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.System);
         private readonly Logger log = LogManager.GetCurrentClassLogger();
 
-        public bool AddRule(ushort port, string userName)
+        public bool AddRule(int port, string userName)
         {
             string arguments = String.Format("http add urlacl http://*:{0}/ user={1}", port, userName);
             return RunNetsh(arguments);
         }
 
-        public bool DeleteRule(ushort port)
+        public bool DeleteRule(int port)
         {
             string arguments = String.Format("http delete urlacl http://*:{0}/", port);
             return RunNetsh(arguments);

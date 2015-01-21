@@ -23,7 +23,7 @@ namespace IronFoundry.Warden.Utilities
         /// <summary>
         ///     netsh http add urlacl http://*:8888/ user=warden_094850238
         /// </summary>
-        public ushort ReserveLocalPort(ushort port, string userName)
+        public int ReserveLocalPort(int port, string userName)
         {
             if (userName.IsNullOrWhiteSpace())
             {

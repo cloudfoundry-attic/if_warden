@@ -14,7 +14,7 @@ namespace IronFoundry.Warden.Utilities
         private const string NetFwPolicy2ProgID = "HNetCfg.FwPolicy2";
         private const string NetFwRuleProgID = "HNetCfg.FWRule";
 
-        public void OpenPort(ushort port, string name)
+        public void OpenPort(int port, string name)
         {
             if (port == default(ushort))
             {
