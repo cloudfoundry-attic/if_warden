@@ -34,8 +34,6 @@ namespace IronFoundry.Container.Messaging
         {
             this.reader = reader;
             this.writer = writer;
-
-            Start();
         }
 
         public void Dispose()

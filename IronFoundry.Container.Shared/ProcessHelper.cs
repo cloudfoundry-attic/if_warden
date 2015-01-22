@@ -74,29 +74,9 @@ namespace IronFoundry.Warden.Utilities
                 get { return process.Handle; }
             }
 
-            public bool HasExited
-            {
-                get { return process.HasExited; }
-            }
-
-            public TimeSpan TotalProcessorTime
-            {
-                get { return process.TotalProcessorTime; }
-            }
-
-            public TimeSpan TotalUserProcessorTime
-            {
-                get { return process.UserProcessorTime; }
-            }
-
             public long PrivateMemoryBytes
             {
                 get { return process.PrivateMemorySize64; }
-            }
-
-            public long WorkingSet
-            {
-                get { return process.WorkingSet64; }
             }
 
             public void Dispose()
@@ -120,9 +100,9 @@ namespace IronFoundry.Warden.Utilities
                 process.WaitForExit();
             }
 
-            public void WaitForExit(int milliseconds)
+            public bool WaitForExit(int milliseconds)
             {
-                process.WaitForExit(milliseconds);
+                return process.WaitForExit(milliseconds);
             }
 
             private void WrappedErrorDataReceived(object sender, DataReceivedEventArgs e)

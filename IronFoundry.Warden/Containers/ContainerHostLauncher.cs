@@ -115,6 +115,7 @@ namespace IronFoundry.Warden.Containers
                     return Task.FromResult(0);
                 });
 
+                messageTransport.Start();
             }
         }
 

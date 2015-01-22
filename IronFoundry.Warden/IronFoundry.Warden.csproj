@@ -43,6 +43,7 @@
     <Compile Include="Configuration\WardenConfig.cs" />
     <Compile Include="Configuration\WardenSection.cs" />
     <Compile Include="Containers\ContainerDirectory.cs" />
+    <Compile Include="Containers\ContainerHandle.cs" />
     <Compile Include="Containers\ContainerLogEmitter.cs" />
     <Compile Include="Containers\ContainerManager.cs" />
     <Compile Include="Containers\ContainerProxy.cs" />
@@ -54,14 +55,12 @@
     <Compile Include="Containers\IContainerJanitor.cs" />
     <Compile Include="Containers\IContainerManager.cs" />
     <Compile Include="Containers\ContainerHostLauncher.cs" />
-    <Compile Include="Containers\JobObjectLimits.cs" />
     <Compile Include="Containers\Messages\BindMountMessage.cs" />
     <Compile Include="Containers\Messages\ContainerInfoMessage.cs" />
     <Compile Include="Containers\Messages\ContainerInitializeMessage.cs" />
     <Compile Include="Containers\Messages\ContainerStateMessage.cs" />
     <Compile Include="Containers\Messages\CopyFileMessage.cs" />
     <Compile Include="Containers\Messages\CopyMessage.cs" />
-    <Compile Include="Containers\Messages\CreateProcessMessage.cs" />
     <Compile Include="Containers\Messages\CreateProcessStartInfo.cs" />
     <Compile Include="Containers\Messages\EnableLoggingMessage.cs" />
     <Compile Include="Containers\Messages\LimitMemoryMessage.cs" />

@@ -244,6 +244,8 @@ namespace IronFoundry.Warden.ContainerHost
                     transport.PublishEventAsync(jsonLogEvent);
                 };
 
+                transport.Start();
+
                 exitEvent.WaitOne();
             }
         }

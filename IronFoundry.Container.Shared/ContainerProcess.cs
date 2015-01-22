@@ -14,17 +14,17 @@ namespace IronFoundry.Container
             this.process = process;
         }
 
-        int Id
+        public int Id
         {
             get { return process.Id; }
         }
 
-        void Kill()
+        public void Kill()
         {
             process.Kill();
         }
 
-        int WaitForExit()
+        public int WaitForExit()
         {
             process.WaitForExit();
             return process.ExitCode;

@@ -35,6 +35,10 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NSubstitute">
       <HintPath>..\packages\NSubstitute.1.7.1.0\lib\NET40\NSubstitute.dll</HintPath>
     </Reference>
@@ -57,15 +61,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConstrainedProcessRunnerTests.cs" />
+    <Compile Include="ConstrainedProcessTests.cs" />
     <Compile Include="ContainerCreationServiceTests.cs" />
+    <Compile Include="ContainerDirectoryTests.cs" />
     <Compile Include="ContainerHandleGeneratorTests.cs" />
+    <Compile Include="ContainerHostClientTests.cs" />
+    <Compile Include="ContainerProcessTests.cs" />
     <Compile Include="ContainerTests.cs" />
+    <Compile Include="Handlers\CreateProcessHandlerTests.cs" />
+    <Compile Include="Helpers\TempFile.cs" />
+    <Compile Include="ProcessRunnerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\IronFoundry.Container.Host\IronFoundry.Container.Host.csproj">
+      <Project>{6e4dd8fc-91e8-4c70-946d-4c37df84c8cf}</Project>
+      <Name>IronFoundry.Container.Host</Name>
+    </ProjectReference>
     <ProjectReference Include="..\IronFoundry.Container.Shared\IronFoundry.Container.Shared.csproj">
       <Project>{cb7ba555-21fd-4c57-a629-a925b6a83a31}</Project>
       <Name>IronFoundry.Container.Shared</Name>
