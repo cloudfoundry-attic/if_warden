@@ -68,10 +68,56 @@ namespace IronFoundry.Container.Acceptance
         }
 
         [FactAdminRequired]
+        public void UniqueUserPerContainer()
+        {
+            var containerService = new ContainerCreationService(ContainerBasePath, UserGroupName);
+
+            Container1 = CreateContainer(containerService, Container1Handle);
+            Container2 = CreateContainer(containerService, Container2Handle);
+
+            var pSpec = new ProcessSpec
+            {
+                ExecutablePath = "whoami.exe",
+            };
+
+            var io1 = new StringProcessIO();
+            var io2 = new StringProcessIO();
+
+            Container1.Run(pSpec, io1).WaitForExit();
+            Container2.Run(pSpec, io2).WaitForExit();
+
+            string user1 = io1.Output.ToString();
+            string user2 = io2.Output.ToString();
+
+            Assert.NotEmpty(user1);
+            Assert.NotEmpty(user2);
+            Assert.NotEqual(user1, user2);
+        }
+
+        [FactAdminRequired]
+        public void ContainerUserInContainerGroup()
+        {
+            var containerService = new ContainerCreationService(ContainerBasePath, UserGroupName);
+            Container1 = CreateContainer(containerService, Container1Handle);
+
+            var pSpec = new ProcessSpec
+            {
+                ExecutablePath = "whoami.exe",
+                Arguments = new string[] { "/GROUPS" }
+            };
+
+            var io = new StringProcessIO();
+            Container1.Run(pSpec, io).WaitForExit();
+            var groupOutput = io.Output.ToString();
+
+            Assert.Contains(UserGroupName, groupOutput);
+        }
+
+        [FactAdminRequired]
         public void StartShortLivedTask()
         {
             var containerService = new ContainerCreationService(ContainerBasePath, UserGroupName);
-            var container = CreateContainer(containerService, Container1Handle);
+            Container1 = CreateContainer(containerService, Container1Handle);
 
             var pSpec = new ProcessSpec
             {
@@ -82,7 +128,7 @@ namespace IronFoundry.Container.Acceptance
 
             // RUN THE SHORT LIVED PROCESS
             var io = new StringProcessIO();
-            var process = container.Run(pSpec, io);
+            var process = Container1.Run(pSpec, io);
 
             int exitCode;
             bool exited = process.WaitForExit(2000, out exitCode);
@@ -95,7 +141,7 @@ namespace IronFoundry.Container.Acceptance
             Assert.Equal(exitCode, 0);
             
             // VERIFY THE ENVIRONMENT WAS SET
-            Assert.Equal(output, container.Handle);
+            Assert.Equal(output, Container1.Handle);
             Assert.Equal(error, "VAL1");
         }
 
@@ -103,7 +149,7 @@ namespace IronFoundry.Container.Acceptance
         public void StartAndStopLongRunningProcess()
         {
             var containerService = new ContainerCreationService(ContainerBasePath, UserGroupName);
-            var container = CreateContainer(containerService, Container1Handle);
+            Container1 = CreateContainer(containerService, Container1Handle);
 
             var pSpec = new ProcessSpec
             {
@@ -113,7 +159,7 @@ namespace IronFoundry.Container.Acceptance
 
             // START THE LONG RUNNING PROCESS
             var io = new StringProcessIO();
-            var process = container.Run(pSpec, io);
+            var process = Container1.Run(pSpec, io);
 
             int exitCode;
             bool exited = process.WaitForExit(500, out exitCode);
