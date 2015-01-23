@@ -62,12 +62,12 @@
     <Compile Include="FileSystemManager.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="IContainerDirectory.cs" />
-    <Compile Include="IContainerHostLauncher.cs" />
     <Compile Include="IContainerUser.cs" />
     <Compile Include="ILocalTcpPortManager.cs" />
     <Compile Include="ContainerProcess.cs" />
     <Compile Include="JobObjectLimits.cs" />
     <Compile Include="Messages\CreateProcessMessage.cs" />
+    <Compile Include="Messages\PingMessage.cs" />
     <Compile Include="Messages\ProcessDataEvent.cs" />
     <Compile Include="Messages\WaitForProcessExitMessage.cs" />
     <Compile Include="Win32\DuplicateTokenEx.cs" />

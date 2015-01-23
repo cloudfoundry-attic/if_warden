@@ -131,6 +131,16 @@ namespace IronFoundry.Container
                 throw new NotImplementedException();
             }
 
+            public bool Ping(TimeSpan timeout)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Shutdown()
+            {
+                throw new NotImplementedException();
+            }
+
             public void SubscribeToProcessData(Guid processKey, Action<ProcessDataEvent> callback)
             {
                 ActualProcessKey = processKey;

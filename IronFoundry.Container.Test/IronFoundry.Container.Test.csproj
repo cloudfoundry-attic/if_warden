@@ -67,6 +67,7 @@
     <Compile Include="ContainerDirectoryTests.cs" />
     <Compile Include="ContainerHandleGeneratorTests.cs" />
     <Compile Include="ContainerHostClientTests.cs" />
+    <Compile Include="ContainerHostLauncherTests.cs" />
     <Compile Include="ContainerProcessTests.cs" />
     <Compile Include="ContainerTests.cs" />
     <Compile Include="Handlers\CreateProcessHandlerTests.cs" />

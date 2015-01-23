@@ -27,14 +27,14 @@ namespace IronFoundry.Warden.Test
             protected readonly string containerHandle = "ContainerHandle";
 
             protected ContainerProxy proxy;
-            protected IContainerHostLauncher launcher;
+            protected Containers.IContainerHostLauncher launcher;
             protected ILogEmitter logEmitter;
 
             protected string tempDirectory;
 
             public ProxyContainerContext()
             {
-                this.launcher = Substitute.For<IContainerHostLauncher>();
+                this.launcher = Substitute.For<Containers.IContainerHostLauncher>();
                 this.launcher.When(x => x.Start(null, null));
 
                 this.logEmitter = Substitute.For<ILogEmitter>();
@@ -503,7 +503,7 @@ namespace IronFoundry.Warden.Test
             }
         }
 
-        public class TestableContainerHostLauncher : ContainerHostLauncher
+        public class TestableContainerHostLauncher : Containers.ContainerHostLauncher
         {
             public void RaiseOnHostStopped(int exitCode)
             {

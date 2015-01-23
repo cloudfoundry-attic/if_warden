@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace IronFoundry.Container.Messaging
 {
-    public interface IMessagingClient
+    public interface IMessagingClient : IDisposable
     {
         Task<TResult> SendMessageAsync<T, TResult>(T request)
             where T : JsonRpcRequest
@@ -17,7 +17,7 @@ namespace IronFoundry.Container.Messaging
             where T: class, new();
     }
 
-    public class MessagingClient : IMessagingClient, IDisposable
+    public class MessagingClient : IMessagingClient
     {
         private Action<JObject> transportHandler;
         private ConcurrentDictionary<JToken, ResponsePublisher> awaitingResponse =

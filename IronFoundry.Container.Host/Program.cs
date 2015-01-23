@@ -18,18 +18,19 @@ namespace IronFoundry.Container.Host
 
             var input = Console.In;
             var output = Console.Out;
-            string handle = null;
+            var error = Console.Error;
+            string jobObjectName = null;
 
             var options = new NDesk.Options.OptionSet {
-                { "handle=", v => handle = v },
+                { "jobObject=", v => jobObjectName = v },
             };
 
             options.Parse(args);
 
-            if (String.IsNullOrWhiteSpace(handle))
-                ExitWithError("Missing --handle option for starting container", 10);
+            if (String.IsNullOrWhiteSpace(jobObjectName))
+                ExitWithError("Missing --jobObject option for starting container", 10);
 
-            var jobObject = new JobObject(handle);
+            var jobObject = new JobObject(jobObjectName);
             var hostProcess = System.Diagnostics.Process.GetCurrentProcess();
             jobObject.AssignProcessToJob(hostProcess);
 
@@ -38,6 +39,7 @@ namespace IronFoundry.Container.Host
                 processTracker = new ProcessTracker(transport);
 
                 var createProcessHandler = new CreateProcessHandler(new ProcessRunner(), processTracker);
+                var pingHandler = new PingHandler();
 
                 var dispatcher = new MessageDispatcher();
                 dispatcher.RegisterMethod<CreateProcessRequest>(
@@ -46,6 +48,13 @@ namespace IronFoundry.Container.Host
                     {
                         var result = await createProcessHandler.ExecuteAsync(request.@params);
                         return new CreateProcessResponse(request.id, result);
+                    });
+                dispatcher.RegisterMethod<PingRequest>(
+                    PingRequest.MethodName,
+                    async (request) =>
+                    {
+                        await pingHandler.ExecuteAsync();
+                        return new PingResponse(request.id);
                     });
 
                 transport.SubscribeRequest(
@@ -57,8 +66,14 @@ namespace IronFoundry.Container.Host
 
                 transport.Start();
 
+                ReportOk();
                 exitEvent.WaitOne();
             }
+        }
+
+        static void ReportOk()
+        {
+            Console.Error.WriteLine("OK");
         }
 
         static void ExitWithError(string message, int exitCode)

@@ -192,7 +192,7 @@ namespace IronFoundry.Warden.Containers
 
             p.EnableRaisingEvents = true;
 
-            var wrapped = processHelper.WrapProcess(p);
+            var wrapped = ProcessHelper.WrapProcess(p);
             processMonitor.TryAdd(wrapped);
 
             bool started = p.Start();

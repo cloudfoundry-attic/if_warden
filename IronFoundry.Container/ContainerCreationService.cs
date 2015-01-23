@@ -9,44 +9,6 @@ using IronFoundry.Warden.Utilities;
 
 namespace IronFoundry.Container
 {
-    public class ContainerUser : IContainerUser
-    {
-        readonly IUserManager userManager; // TODO: Refactor this out of this class
-        readonly NetworkCredential credentials;
-
-        public ContainerUser(IUserManager userManager, NetworkCredential credentials)
-        {
-            this.userManager = userManager;
-            this.credentials = credentials;
-        }
-
-        public string UserName
-        {
-            get { return credentials.UserName; }
-        }
-
-        public NetworkCredential GetCredential()
-        {
-            return credentials;
-        }
-
-        static string BuildContainerUserName(string handle)
-        {
-            return "container_" + handle;
-        }
-
-        public static ContainerUser Create(IUserManager userManager, string containerHandle)
-        {
-            var credentials = userManager.CreateUser(BuildContainerUserName(containerHandle));
-            return new ContainerUser(userManager, credentials);
-        }
-
-        public void Delete()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public class ContainerSpec
     {
         public string Handle { get; set; }
@@ -66,23 +28,23 @@ namespace IronFoundry.Container
         readonly FileSystemManager fileSystem;
         readonly IUserManager userManager;
         readonly ILocalTcpPortManager tcpPortManager;
-        readonly IProcessRunner localProcessRunner;
-        readonly IProcessRunner remoteProcessRunner;
+        readonly IProcessRunner processRunner;
+        readonly IContainerHostService containerHostService;
 
         public ContainerCreationService(
             IUserManager userManager,
             FileSystemManager fileSystem,
             ILocalTcpPortManager tcpPortManager,
-            IProcessRunner localProcessRunner,
-            IProcessRunner remoteProcessRunner,
+            IProcessRunner processRunner,
+            IContainerHostService containerHostService,
             string containerBasePath
             )
         {
             this.userManager = userManager;
             this.fileSystem = fileSystem;
             this.tcpPortManager = tcpPortManager;
-            this.localProcessRunner = localProcessRunner;
-            this.remoteProcessRunner = remoteProcessRunner;
+            this.processRunner = processRunner;
+            this.containerHostService = containerHostService;
             this.containerBasePath = containerBasePath;
         }
 
@@ -97,7 +59,7 @@ namespace IronFoundry.Container
             var user = ContainerUser.Create(userManager, handle);
             var directory = ContainerDirectory.Create(fileSystem, containerBasePath, handle, user);
 
-            return new Container(handle, user, directory, tcpPortManager, localProcessRunner, remoteProcessRunner);
+            return new Container(handle, user, directory, tcpPortManager, processRunner, null);
         }
 
         public void Dispose()

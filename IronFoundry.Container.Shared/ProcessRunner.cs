@@ -36,18 +36,6 @@ namespace IronFoundry.Container
     {
         static readonly string[] EmptyArguments = new string[0];
 
-        readonly ProcessHelper processHelper;
-
-        public ProcessRunner()
-            : this(new ProcessHelper())
-        {
-        }
-
-        public ProcessRunner(ProcessHelper processHelper)
-        {
-            this.processHelper = processHelper;
-        }
-
         public IProcess Run(ProcessRunSpec runSpec)
         {
             var startInfo = new ProcessStartInfo
@@ -78,7 +66,7 @@ namespace IronFoundry.Container
 
             p.EnableRaisingEvents = true;
 
-            var wrapped = processHelper.WrapProcess(p);
+            var wrapped = ProcessHelper.WrapProcess(p);
 
             if (runSpec.OutputCallback != null)
             {

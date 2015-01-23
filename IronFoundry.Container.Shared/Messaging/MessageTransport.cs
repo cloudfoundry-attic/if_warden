@@ -9,7 +9,13 @@ using IronFoundry.Container.Concurrency;
 
 namespace IronFoundry.Container.Messaging
 {
-    public class MessageTransport : IDisposable
+    public interface IMessageTransport : IDisposable
+    {
+        void Start();
+        void Stop();
+    }
+
+    public class MessageTransport : IMessageTransport
     {
         private TextReader reader;
         private TextWriter writer;

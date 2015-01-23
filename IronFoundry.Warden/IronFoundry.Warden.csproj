@@ -52,6 +52,7 @@
     <Compile Include="Containers\ContainerUser.cs" />
     <Compile Include="Containers\IContainer.cs" />
     <Compile Include="Containers\IContainerClient.cs" />
+    <Compile Include="Containers\IContainerHostLauncher.cs" />
     <Compile Include="Containers\IContainerJanitor.cs" />
     <Compile Include="Containers\IContainerManager.cs" />
     <Compile Include="Containers\ContainerHostLauncher.cs" />

@@ -41,7 +41,7 @@ namespace IronFoundry.Warden.Utilities
                 throw new Win32Exception(Marshal.GetLastWin32Error(), "Error sending signal to process (id " + processId + ").");
         }
 
-        public IProcess WrapProcess(Process process)
+        public static IProcess WrapProcess(Process process)
         {
             return new RealProcessWrapper(process);
         }
