@@ -173,5 +173,31 @@ namespace IronFoundry.Container
                 }
             }
         }
+
+        public class Dispose : ContainerTests
+        {
+            [Fact]
+            public void ReleasesPorts()
+            {
+                TcpPortManager.ReserveLocalPort(Arg.Any<int>(), Arg.Any<string>())
+                    .Returns(c => c.Arg<int>());
+
+                Container.ReservePort(100);
+                Container.ReservePort(101);
+                
+                Container.Dispose();
+
+                TcpPortManager.Received(1).ReleaseLocalPort(100, User.UserName);
+                TcpPortManager.Received(1).ReleaseLocalPort(101, User.UserName);
+            }
+
+            [Fact]
+            public void DeletesTheUser()
+            {
+                Container.Dispose();
+
+                User.Received(1).Delete();
+            }
+        }
     }
 }

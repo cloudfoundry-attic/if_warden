@@ -131,7 +131,7 @@ namespace IronFoundry.Container.Acceptance
             var process = Container1.Run(pSpec, io);
 
             int exitCode;
-            bool exited = process.WaitForExit(2000, out exitCode);
+            bool exited = process.TryWaitForExit(2000, out exitCode);
 
             var output = io.Output.ToString();
             var error = io.Error.ToString();
@@ -162,7 +162,7 @@ namespace IronFoundry.Container.Acceptance
             var process = Container1.Run(pSpec, io);
 
             int exitCode;
-            bool exited = process.WaitForExit(500, out exitCode);
+            bool exited = process.TryWaitForExit(500, out exitCode);
 
             // VERIFY IT HASNT EXITED YET
             Assert.False(exited);
@@ -171,7 +171,7 @@ namespace IronFoundry.Container.Acceptance
 
             // KILL THE PROCESS AND WAIT FOR EXIT
             process.Kill();
-            exited = process.WaitForExit(2000, out exitCode);
+            exited = process.TryWaitForExit(2000, out exitCode);
 
             // VERIFY THE PROCESS WAS KILLED
             Assert.True(exited);

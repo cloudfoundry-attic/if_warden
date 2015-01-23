@@ -38,7 +38,7 @@ namespace IronFoundry.Container
         /// </returns>
         /// <param name="milliseconds">The max time for the process to exit</param>
         /// <param name="exitCode">Populated with the exit code of the process if it exited</param>
-        public bool WaitForExit(int milliseconds, out int exitCode)
+        public bool TryWaitForExit(int milliseconds, out int exitCode)
         {
             bool exited = false;
             exitCode = 0;

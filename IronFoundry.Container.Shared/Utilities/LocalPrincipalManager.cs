@@ -134,7 +134,7 @@ namespace IronFoundry.Warden.Utilities
 
             if (group == null)
             {
-                throw new ArgumentException(string.Format("The group specified group '{0}' does not exist.", groupName), "groupName");
+                throw new ArgumentException(string.Format("The specified group '{0}' does not exist.", groupName), "groupName");
             }
 
             // The iisUserGroups.Members.Add attempts to resolve all the SID's of the entries while

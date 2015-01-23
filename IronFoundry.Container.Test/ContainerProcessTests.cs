@@ -61,7 +61,7 @@ namespace IronFoundry.Container
                 Process.WaitForExit(100).Returns(true);
 
                 int exitCode = 0;
-                bool exited = ContainerProcess.WaitForExit(100, out exitCode);
+                bool exited = ContainerProcess.TryWaitForExit(100, out exitCode);
 
                 Assert.Equal(1, exitCode);
                 Assert.True(exited);
@@ -74,7 +74,7 @@ namespace IronFoundry.Container
                 Process.WaitForExit(100).Returns(false);
 
                 int exitCode = 0;
-                bool exited = ContainerProcess.WaitForExit(100, out exitCode);
+                bool exited = ContainerProcess.TryWaitForExit(100, out exitCode);
 
                 Assert.False(exited);
                 Process.Received(1).WaitForExit(100);

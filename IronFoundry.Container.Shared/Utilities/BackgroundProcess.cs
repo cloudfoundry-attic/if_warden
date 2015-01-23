@@ -5,6 +5,7 @@
     using System.IO;
     using System.Net;
 
+    // TODO BR: Move this back to Warden and make the NetSh runner use the LocalProcessRunner
     [System.ComponentModel.DesignerCategory("Code")]
     public class BackgroundProcess : Process
     {

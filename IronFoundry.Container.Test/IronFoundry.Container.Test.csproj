@@ -72,6 +72,7 @@
     <Compile Include="ContainerHostLauncherTests.cs" />
     <Compile Include="ContainerProcessTests.cs" />
     <Compile Include="ContainerTests.cs" />
+    <Compile Include="ContainerUserTests.cs" />
     <Compile Include="Handlers\CreateProcessHandlerTests.cs" />
     <Compile Include="Helpers\TempFile.cs" />
     <Compile Include="ProcessRunnerTests.cs" />
