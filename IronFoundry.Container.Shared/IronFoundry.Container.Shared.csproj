@@ -73,10 +73,18 @@
     <Compile Include="Messages\PingMessage.cs" />
     <Compile Include="Messages\ProcessDataEvent.cs" />
     <Compile Include="Messages\WaitForProcessExitMessage.cs" />
+    <Compile Include="Utilities\BackgroundProcess.cs" />
     <Compile Include="Utilities\DesktopPermissionManager.cs" />
+    <Compile Include="Utilities\FirewallManager.cs" />
+    <Compile Include="Utilities\IFirewallManager.cs" />
+    <Compile Include="Utilities\INetShRunner.cs" />
+    <Compile Include="Utilities\IPUtilities.cs" />
     <Compile Include="Utilities\LocalPrincipalManager.cs" />
+    <Compile Include="Utilities\LocalTcpPortManager.cs" />
     <Compile Include="Utilities\LoggerExtensionMethods.cs" />
+    <Compile Include="Utilities\NetShRunner.cs" />
     <Compile Include="Utilities\WindowStationSecurity.cs" />
+    <Compile Include="WardenException.cs" />
     <Compile Include="Win32\DesktopRights.cs" />
     <Compile Include="Win32\DesktopSecurity.cs" />
     <Compile Include="Win32\DuplicateTokenEx.cs" />
@@ -114,7 +122,17 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <COMReference Include="NetFwTypeLib">
+      <Guid>{58FBCF7C-E7A9-467C-80B3-FC65E8FCCA08}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -52,6 +52,12 @@ namespace IronFoundry.Container
         {
             var permissionManager = new DesktopPermissionManager();
             this.userManager = new LocalPrincipalManager(permissionManager, userGroupName);
+
+            this.fileSystem = new FileSystemManager();
+            this.tcpPortManager = new LocalTcpPortManager();
+            this.processRunner = new ProcessRunner();
+            this.containerHostService = new ContainerHostService();
+            this.containerBasePath = containerBasePath;
         }
 
         public IContainer CreateContainer(ContainerSpec containerSpec)

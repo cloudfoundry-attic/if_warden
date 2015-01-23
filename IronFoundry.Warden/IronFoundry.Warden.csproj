@@ -73,9 +73,6 @@
     <Compile Include="Handlers\LoggingRequestHandler.cs" />
     <Compile Include="PInvoke\IoCompletionPort.cs" />
     <Compile Include="Utilities\EnvironmentBlock.cs" />
-    <Compile Include="Utilities\IFirewallManager.cs" />
-    <Compile Include="Utilities\INetShRunner.cs" />
-    <Compile Include="Utilities\NetShRunner.cs" />
     <Compile Include="Handlers\ContainerRequestHandler.cs" />
     <Compile Include="Handlers\CopyRequestHandler.cs" />
     <Compile Include="Handlers\CopyInRequestHandler.cs" />
@@ -121,7 +118,6 @@
     <Compile Include="Utilities\ContainerExtensions.cs" />
     <Compile Include="Utilities\IFilePermissionManager.cs" />
     <Compile Include="Utilities\LoggedIEnumerableExtensionMethods.cs" />
-    <Compile Include="Utilities\FirewallManager.cs" />
     <Compile Include="Utilities\ProcessExtensionMethods.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -133,7 +129,6 @@
     <Compile Include="Server\MessageHandler.cs" />
     <Compile Include="Server\SocketExceptionHandler.cs" />
     <Compile Include="Tasks\ExeCommand.cs" />
-    <Compile Include="Utilities\BackgroundProcess.cs" />
     <Compile Include="Tasks\ReplaceTokensCommand.cs" />
     <Compile Include="Tasks\ProcessCommand.cs" />
     <Compile Include="Tasks\TarCommand.cs" />
@@ -162,9 +157,7 @@
     <Compile Include="Handlers\StreamRequestHandler.cs" />
     <Compile Include="Server\TcpServer.cs" />
     <Compile Include="Tasks\WebApplicationCommand.cs" />
-    <Compile Include="Utilities\IPUtilities.cs" />
     <Compile Include="Tasks\TaskRunner.cs" />
-    <Compile Include="Utilities\LocalTcpPortManager.cs" />
     <Compile Include="Utilities\MessageWriter.cs" />
     <Compile Include="Utilities\Statics.cs" />
     <Compile Include="Utilities\TempFile.cs" />
