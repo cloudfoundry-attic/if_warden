@@ -26,7 +26,8 @@ namespace IronFoundry.Container
         TextReader StandardInput { get; }
     }
 
-    public interface IContainer
+
+    public interface IContainer : IDisposable
     {
         string Handle { get; }
         //ContainerState State { get; }
@@ -62,6 +63,7 @@ namespace IronFoundry.Container
         readonly IProcessRunner processRunner;
         readonly IProcessRunner constrainedProcessRunner;
         readonly Dictionary<string, string> defaultEnvironment;
+        private readonly List<int> reservedPorts = new List<int>();  
 
         public Container(
             string handle,
@@ -95,7 +97,9 @@ namespace IronFoundry.Container
 
         public int ReservePort(int requestedPort)
         {
-            return tcpPortManager.ReserveLocalPort(requestedPort, user.UserName);
+            var reservedPort = tcpPortManager.ReserveLocalPort(requestedPort, user.UserName);
+            reservedPorts.Add(reservedPort);
+            return reservedPort;
         }
 
         public ContainerProcess Run(ProcessSpec spec, IProcessIO io)
@@ -117,6 +121,20 @@ namespace IronFoundry.Container
             var process = runner.Run(runSpec);
 
             return new ContainerProcess(process);
+        }
+
+        public void Dispose()
+        {
+            // TODO Dispose of the constrainedProcessRunner
+//            this.constrainedProcessRunner.Dispose();
+            foreach (var port in reservedPorts)
+            {
+                this.tcpPortManager.ReleaseLocalPort(port, this.user.UserName);
+            }
+            //TODO - Unmap the mounted directories (Removes user ACLs)
+            //TODO - Delete the container directory
+
+            this.user.Delete();
         }
     }
 }

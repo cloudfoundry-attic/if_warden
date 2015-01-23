@@ -43,7 +43,7 @@ namespace IronFoundry.Container
 
         public void Delete()
         {
-            throw new NotImplementedException();
+            userManager.DeleteUser(UserName);
         }
     }
 }

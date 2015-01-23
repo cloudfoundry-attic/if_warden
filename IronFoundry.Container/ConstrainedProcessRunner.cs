@@ -31,5 +31,10 @@ namespace IronFoundry.Container
 
             return process;
         }
+
+        public void Dispose()
+        {
+            hostClient.Shutdown();
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace IronFoundry.Container
         public Action<string> ErrorCallback { get; set; }
     }
 
-    public interface IProcessRunner
+    public interface IProcessRunner : IDisposable
     {
         IProcess Run(ProcessRunSpec runSpec);
     }
@@ -91,6 +91,10 @@ namespace IronFoundry.Container
             p.BeginErrorReadLine();
 
             return wrapped;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

@@ -19,7 +19,9 @@ namespace IronFoundry.Warden.Utilities
         private static extern int NetUserDel(string serverName, string userName);
 
         private const uint COM_EXCEPT_UNKNOWN_DIRECTORY_OBJECT = 0x80005004;
-        private const string IIS_IUSRS_NAME = "IIS_IUSRS";
+        // TODO: Determine if adding the user to IIS_USRS is really a requirement for the
+        // IISHost.  If it is, then pass an array of groups for the user instead of having this hardcoded.
+        //private const string IIS_IUSRS_NAME = "IIS_IUSRS";
 
         private readonly string directoryPath = String.Format("WinNT://{0}", Environment.MachineName);
         private readonly Logger log = LogManager.GetCurrentClassLogger();
@@ -115,7 +117,7 @@ namespace IronFoundry.Warden.Utilities
                 if (userSaved)
                 {
                     rvUserName = user.SamAccountName;
-                    AddUserToGroup(context, IIS_IUSRS_NAME, user);
+                    //AddUserToGroup(context, IIS_IUSRS_NAME, user);
                     AddUserToGroup(context, wardenUserGroupName, user);
                     rv = new LocalPrincipalData(rvUserName, rvPassword);
                 }
@@ -129,6 +131,11 @@ namespace IronFoundry.Warden.Utilities
             var groupQuery = new GroupPrincipal(context, groupName);
             var searcher = new PrincipalSearcher(groupQuery);
             var group = searcher.FindOne() as GroupPrincipal;
+
+            if (group == null)
+            {
+                throw new ArgumentException(string.Format("The group specified group '{0}' does not exist.", groupName), "groupName");
+            }
 
             // The iisUserGroups.Members.Add attempts to resolve all the SID's of the entries while
             // it's enumerating for an item.  This approach works around this issue by dynamically

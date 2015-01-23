@@ -4,6 +4,6 @@ namespace IronFoundry.Warden.Utilities
     public interface ILocalTcpPortManager
     {
         int ReserveLocalPort(int port, string userName);
-        void ReleaseLocalPort(ushort? port, string userName);
+        void ReleaseLocalPort(int? port, string userName);
     }
 }

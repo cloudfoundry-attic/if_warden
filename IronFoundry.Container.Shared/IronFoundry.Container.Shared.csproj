@@ -81,6 +81,7 @@
     <Compile Include="Utilities\IPUtilities.cs" />
     <Compile Include="Utilities\LocalPrincipalManager.cs" />
     <Compile Include="Utilities\LocalTcpPortManager.cs" />
+    <Compile Include="Utilities\LocalUserGroupManager.cs" />
     <Compile Include="Utilities\LoggerExtensionMethods.cs" />
     <Compile Include="Utilities\NetShRunner.cs" />
     <Compile Include="Utilities\WindowStationSecurity.cs" />

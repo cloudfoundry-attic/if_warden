@@ -49,6 +49,35 @@ namespace IronFoundry.Container
 
                 Assert.Equal(1, exitCode);
                 Process.Received(1).WaitForExit();
+            } 
+        }
+
+        public class WaitForExitWithTimeout : ContainerProcessTests
+        {
+            [Fact]
+            public void WaitsForProcessAndReturnsExitCode()
+            {
+                Process.ExitCode.Returns(1);
+                Process.WaitForExit(100).Returns(true);
+
+                int exitCode = 0;
+                bool exited = ContainerProcess.WaitForExit(100, out exitCode);
+
+                Assert.Equal(1, exitCode);
+                Assert.True(exited);
+                Process.Received(1).WaitForExit(100);
+            }
+
+            [Fact]
+            public void ReturnsFalseIfNotExited()
+            {
+                Process.WaitForExit(100).Returns(false);
+
+                int exitCode = 0;
+                bool exited = ContainerProcess.WaitForExit(100, out exitCode);
+
+                Assert.False(exited);
+                Process.Received(1).WaitForExit(100);
             }
         }
     }

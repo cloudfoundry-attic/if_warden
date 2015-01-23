@@ -60,7 +60,7 @@ namespace IronFoundry.Warden.Utilities
         /// <summary>
         ///     netsh http delete urlacl http://*:8888/
         /// </summary>
-        public void ReleaseLocalPort(ushort? port, string userName)
+        public void ReleaseLocalPort(int? port, string userName)
         {
             if (userName.IsNullOrWhiteSpace())
             {
