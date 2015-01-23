@@ -1,6 +1,7 @@
-﻿namespace IronFoundry.Warden.Utilities
+﻿using IronFoundry.Container.Win32;
+
+namespace IronFoundry.Warden.Utilities
 {
-    using IronFoundry.Warden.PInvoke;
     using System;
     using System.Runtime.InteropServices;
     using System.Security.AccessControl;

@@ -14,6 +14,7 @@ namespace IronFoundry.Container
     public class ContainerCreationServiceTests
     {
         string ContainerBasePath { get; set; }
+        string ContainerUserGroup { get; set; }
         FileSystemManager FileSystem { get; set; }
         IProcessRunner LocalProcessRunner { get; set; }
         IContainerHostService ContainerHostService { get; set; }
@@ -24,12 +25,19 @@ namespace IronFoundry.Container
         public ContainerCreationServiceTests()
         {
             ContainerBasePath = @"C:\Containers";
+            ContainerUserGroup = "ContainerUsers";
 
             FileSystem = Substitute.For<FileSystemManager>();
             LocalProcessRunner = Substitute.For<IProcessRunner>();
             TcpPortManager = Substitute.For<ILocalTcpPortManager>();
             UserManager = Substitute.For<IUserManager>();
             Service = new ContainerCreationService(UserManager, FileSystem, TcpPortManager, LocalProcessRunner, ContainerHostService, ContainerBasePath);
+        }
+
+        [Fact]
+        public void WhenCreatedWithBasePathAndUserGroup()
+        {
+            var creationService = new ContainerCreationService(ContainerBasePath, ContainerUserGroup);
         }
 
         public class CreateContainer : ContainerCreationServiceTests

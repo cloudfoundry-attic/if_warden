@@ -1,4 +1,4 @@
-﻿namespace IronFoundry.Warden.Utilities
+﻿namespace IronFoundry.Container.Win32
 {
     using System;
 

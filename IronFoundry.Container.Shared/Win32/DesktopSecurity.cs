@@ -1,5 +1,4 @@
-﻿using IronFoundry.Warden.PInvoke;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -7,7 +6,7 @@ using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IronFoundry.Warden.Utilities
+namespace IronFoundry.Container.Win32
 {
     // BR: Move this to IronFoundry.Container
     class DesktopSecurity : ObjectSecurity<NativeMethods.DesktopRights>

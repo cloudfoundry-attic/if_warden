@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IronFoundry.Warden.PInvoke
+namespace IronFoundry.Container.Win32
 {
 
     // From WinNT.h

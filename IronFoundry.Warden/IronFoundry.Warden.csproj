@@ -71,11 +71,7 @@
     <Compile Include="Containers\Messages\StopMessage.cs" />
     <Compile Include="Containers\ProcessMonitor.cs" />
     <Compile Include="Handlers\LoggingRequestHandler.cs" />
-    <Compile Include="PInvoke\DesktopRights.cs" />
     <Compile Include="PInvoke\IoCompletionPort.cs" />
-    <Compile Include="PInvoke\StandardRights.cs" />
-    <Compile Include="PInvoke\WindowsStationRights.cs" />
-    <Compile Include="Utilities\DesktopSecurity.cs" />
     <Compile Include="Utilities\EnvironmentBlock.cs" />
     <Compile Include="Utilities\IFirewallManager.cs" />
     <Compile Include="Utilities\INetShRunner.cs" />
@@ -124,7 +120,6 @@
     <Compile Include="Tasks\RemoteCommand.cs" />
     <Compile Include="Utilities\ContainerExtensions.cs" />
     <Compile Include="Utilities\IFilePermissionManager.cs" />
-    <Compile Include="Utilities\LocalPrincipalData.cs" />
     <Compile Include="Utilities\LoggedIEnumerableExtensionMethods.cs" />
     <Compile Include="Utilities\FirewallManager.cs" />
     <Compile Include="Utilities\ProcessExtensionMethods.cs" />
@@ -167,17 +162,13 @@
     <Compile Include="Handlers\StreamRequestHandler.cs" />
     <Compile Include="Server\TcpServer.cs" />
     <Compile Include="Tasks\WebApplicationCommand.cs" />
-    <Compile Include="Utilities\DesktopPermissionManager.cs" />
     <Compile Include="Utilities\IPUtilities.cs" />
-    <Compile Include="Utilities\LocalPrincipalManager.cs" />
     <Compile Include="Tasks\TaskRunner.cs" />
     <Compile Include="Utilities\LocalTcpPortManager.cs" />
-    <Compile Include="Utilities\LoggerExtensionMethods.cs" />
     <Compile Include="Utilities\MessageWriter.cs" />
     <Compile Include="Utilities\Statics.cs" />
     <Compile Include="Utilities\TempFile.cs" />
     <Compile Include="Server\Buffer.cs" />
-    <Compile Include="Utilities\WindowStationSecurity.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IronFoundry.Container\IronFoundry.Container.csproj">

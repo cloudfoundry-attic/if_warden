@@ -48,6 +48,12 @@ namespace IronFoundry.Container
             this.containerBasePath = containerBasePath;
         }
 
+        public ContainerCreationService(string containerBasePath, string userGroupName)
+        {
+            var permissionManager = new DesktopPermissionManager();
+            this.userManager = new LocalPrincipalManager(permissionManager, userGroupName);
+        }
+
         public IContainer CreateContainer(ContainerSpec containerSpec)
         {
             Guard.NotNull(containerSpec, "containerSpec");

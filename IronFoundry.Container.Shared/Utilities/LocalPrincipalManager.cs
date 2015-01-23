@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Web.Security;
 using NLog;
 using System.Diagnostics;
+using IronFoundry.Container.Win32;
 
 namespace IronFoundry.Warden.Utilities
 {
