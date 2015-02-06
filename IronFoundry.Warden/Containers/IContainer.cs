@@ -1,7 +1,7 @@
-﻿using IronFoundry.Warden.Containers.Messages;
-using IronFoundry.Warden.Shared.Data;
-using IronFoundry.Warden.Shared.Messaging;
-using IronFoundry.Warden.Utilities;
+﻿using IronFoundry.Container;
+using IronFoundry.Warden.Containers.Messages;
+using IronFoundry.Container.Messaging;
+using IronFoundry.Container.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,11 +19,9 @@ namespace IronFoundry.Warden.Containers
         ContainerState State { get; }
 
         void BindMounts(IEnumerable<BindMount> mounts);
-        void CreateTarFile(string sourcePath, string tarFilePath, bool compress);
         void Copy(string source, string destination);
         void CopyFileIn(string sourceFilePath, string destinationFilePath);
         void CopyFileOut(string sourceFilePath, string destinationFilePath);
-        void ExtractTarFile(string tarFilePath, string destinationPath, bool decompress);
 
         IProcess CreateProcess(CreateProcessStartInfo si, bool impersonate = false);
         WindowsImpersonationContext GetExecutionContext(bool shouldImpersonate = false);

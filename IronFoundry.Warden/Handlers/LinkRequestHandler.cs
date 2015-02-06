@@ -1,14 +1,14 @@
-﻿namespace IronFoundry.Warden.Handlers
-{
-    using System;
-    using System.Threading.Tasks;
-    using Containers;
-    using Jobs;
-    using NLog;
-    using Properties;
-    using Protocol;
-    using IronFoundry.Warden.Shared.Messaging;
+﻿using System;
+using System.Threading.Tasks;
+using IronFoundry.Warden.Containers;
+using IronFoundry.Warden.Jobs;
+using NLog;
+using IronFoundry.Warden.Properties;
+using IronFoundry.Warden.Protocol;
+using IronFoundry.Container.Messaging;
 
+namespace IronFoundry.Warden.Handlers
+{
     public class LinkRequestHandler : JobRequestHandler
     {
         private readonly Logger log = LogManager.GetCurrentClassLogger();
@@ -57,11 +57,11 @@
                     {
                         // If the container is shutting down the link request may be completed and unable to build an information response
                         // via normal channels.  In this case, we return a stopped info response.
-                        response.Info = new InfoResponse() { State = IronFoundry.Warden.Containers.Messages.ContainerState.Stopped.ToString() };
+                        response.Info = new InfoResponse() { State = IronFoundry.Container.ContainerState.Stopped.ToString() };
                     }
                     catch (MessagingException)
                     {
-                        response.Info = new InfoResponse() { State = IronFoundry.Warden.Containers.Messages.ContainerState.Stopped.ToString() };
+                        response.Info = new InfoResponse() { State = IronFoundry.Container.ContainerState.Stopped.ToString() };
                     }
 
                     return response;

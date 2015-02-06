@@ -6,9 +6,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IronFoundry.Container.Utilities;
 
 namespace IronFoundry.Warden.Containers
 {
+
+    // BR: Move this to IronFoundry.Container.Shared
    
     /// <summary>
     /// Monitors supplied processes and aggregates their Error and Output received events.
@@ -20,7 +23,7 @@ namespace IronFoundry.Warden.Containers
         public EventHandler<ProcessDataReceivedEventArgs> OutputDataReceived;
         public EventHandler<ProcessDataReceivedEventArgs> ErrorDataReceived;
 
-        public bool TryAdd(Utilities.IProcess process)
+        public bool TryAdd(IProcess process)
         {
             if (processes.TryAdd(process.GetHashCode(), process))
             {

@@ -1,21 +1,19 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web.UI;
+using IronFoundry.Container.Utilities;
+using IronFoundry.Warden.Containers;
+using IronFoundry.Warden.Containers.Messages;
+using IronFoundry.Warden.Protocol;
+using IronFoundry.Warden.Utilities;
+using NLog;
 
 namespace IronFoundry.Warden.Tasks
 {
-    using System;
-    using System.Diagnostics;
-    using System.Net;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Containers;
-    using IronFoundry.Warden.Shared.Messaging;
-    using NLog;
-    using Protocol;
-    using Utilities;
-    using IronFoundry.Warden.Containers.Messages;
-
     public abstract class ProcessCommand : TaskCommand
     {
         public const string EnvLogRelativePath = @"logs\env.log";
@@ -155,7 +153,7 @@ namespace IronFoundry.Warden.Tasks
             var rootedEnv = env.ToDictionary(kv => kv.Key, kv => container.ConvertToPathWithin(kv.Value));
 
             // Generate a new environment containing all the default values.
-            EnvironmentBlock defaultEnv = EnvironmentBlock.GenerateDefault();
+            EnvironmentBlock defaultEnv = EnvironmentBlock.CreateSystemDefault();
 
             // Merge the default envs with the machine and user provided variables
             var envHash = defaultEnv.Merge(rootedEnv).ToDictionary();

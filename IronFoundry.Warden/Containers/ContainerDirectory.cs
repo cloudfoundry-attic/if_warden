@@ -11,9 +11,13 @@ namespace IronFoundry.Warden.Containers
     using System.Collections.Generic;
     using System.IO;
     using System.Security.AccessControl;
+    using IronFoundry.Container;
+    using IronFoundry.Container.Utilities;
     using IronFoundry.Warden.Configuration;
     using IronFoundry.Warden.Containers.Messages;
 
+    // BR: Move to IronFoundry.Container.Shared
+    // BR: Check garden interface and potentially move BindMount concept to Warden
     public interface IContainerDirectory
     {
         string FullName { get; }
@@ -22,6 +26,8 @@ namespace IronFoundry.Warden.Containers
         void Delete();
     }
 
+    // BR: Move to IronFoundry.Container.Shared
+    // BR: Check garden interface and potentially move BindMount concept to Warden
     public class ContainerDirectory : IContainerDirectory
     {
         private readonly IContainerUser user;
@@ -59,7 +65,8 @@ namespace IronFoundry.Warden.Containers
             
             if (fileSystem.DirectoryExists(containerPath))
             {
-                FileAccess effectiveAccess = fileSystem.GetEffectiveDirectoryAccess(containerPath, user.GetCredential());
+                NTAccount account = new NTAccount(user.UserName);
+                FileAccess effectiveAccess = fileSystem.GetEffectiveDirectoryAccess(containerPath, account);
 
                 // The AND provides us with the flags that are common between the requested access and the effective access.
                 // The XOR then flips those bits to 0 and leaves as 1 those that aren't found in effective access.

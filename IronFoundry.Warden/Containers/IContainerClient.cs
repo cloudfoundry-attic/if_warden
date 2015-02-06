@@ -1,11 +1,12 @@
 ﻿using IronFoundry.Warden.Containers.Messages;
-using IronFoundry.Warden.Shared.Data;
 using IronFoundry.Warden.Tasks;
 using IronFoundry.Warden.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Security;
 using System.Threading.Tasks;
+using IronFoundry.Container;
+
 namespace IronFoundry.Warden.Containers
 {
     public interface IContainerClient

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,13 +6,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
+using IronFoundry.Container.Utilities;
 using IronFoundry.Warden.Containers;
-using IronFoundry.Warden.Shared.Messaging;
+using IronFoundry.Warden.Containers.Messages;
 using IronFoundry.Warden.Protocol;
+using IronFoundry.Warden.Utilities;
 using NSubstitute;
 using Xunit;
-using IronFoundry.Warden.Utilities;
-using IronFoundry.Warden.Containers.Messages;
 
 namespace IronFoundry.Warden.Tasks.Test
 {

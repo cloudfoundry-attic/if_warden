@@ -1,7 +1,6 @@
 ﻿using IronFoundry.Warden.Containers;
 using IronFoundry.Warden.Containers.Messages;
-using IronFoundry.Warden.Shared.Data;
-using IronFoundry.Warden.Shared.Messaging;
+using IronFoundry.Container.Messaging;
 using IronFoundry.Warden.Tasks;
 using IronFoundry.Warden.Test.TestSupport;
 using IronFoundry.Warden.Utilities;
@@ -15,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using IronFoundry.Container;
 
 namespace IronFoundry.Warden.Test
 {
@@ -27,14 +27,14 @@ namespace IronFoundry.Warden.Test
             protected readonly string containerHandle = "ContainerHandle";
 
             protected ContainerProxy proxy;
-            protected IContainerHostLauncher launcher;
+            protected Containers.IContainerHostLauncher launcher;
             protected ILogEmitter logEmitter;
 
             protected string tempDirectory;
 
             public ProxyContainerContext()
             {
-                this.launcher = Substitute.For<IContainerHostLauncher>();
+                this.launcher = Substitute.For<Containers.IContainerHostLauncher>();
                 this.launcher.When(x => x.Start(null, null));
 
                 this.logEmitter = Substitute.For<ILogEmitter>();
@@ -229,9 +229,9 @@ namespace IronFoundry.Warden.Test
             }
 
             [Theory]
-            [InlineData(LogMessage.MessageType.OUT)]
-            [InlineData(LogMessage.MessageType.ERR)]
-            public async void LogEventEmitsLogMessage(LogMessage.MessageType messageType)
+            [InlineData(LogMessageType.STDOUT)]
+            [InlineData(LogMessageType.STDERR)]
+            public async void LogEventEmitsLogMessage(LogMessageType messageType)
             {
                 await CompleteInitializationAsync();
 
@@ -246,7 +246,7 @@ namespace IronFoundry.Warden.Test
             {
                 await CompleteInitializationAsync();
 
-                launcher.LogEvent += Raise.Event<EventHandler<LogEventArgs>>(this, new LogEventArgs() { Data = "log me", Type = LogMessage.MessageType.OUT });
+                launcher.LogEvent += Raise.Event<EventHandler<LogEventArgs>>(this, new LogEventArgs() { Data = "log me", Type = LogMessageType.STDOUT });
 
                 // Should not throw
             }
@@ -503,7 +503,7 @@ namespace IronFoundry.Warden.Test
             }
         }
 
-        public class TestableContainerHostLauncher : ContainerHostLauncher
+        public class TestableContainerHostLauncher : Containers.ContainerHostLauncher
         {
             public void RaiseOnHostStopped(int exitCode)
             {

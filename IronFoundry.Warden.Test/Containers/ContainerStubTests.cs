@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.AccessControl;
+using IronFoundry.Container;
+using IronFoundry.Container.Utilities;
+using IronFoundry.Container.Win32;
 using IronFoundry.Warden.Containers;
 using IronFoundry.Warden.Containers.Messages;
-using IronFoundry.Warden.PInvoke;
 using IronFoundry.Warden.Tasks;
 using IronFoundry.Warden.Test.TestSupport;
 using IronFoundry.Warden.Utilities;
 using NSubstitute;
 using Xunit;
+// Temporary type aliases
+using IContainerDirectory = IronFoundry.Warden.Containers.IContainerDirectory;
 
 namespace IronFoundry.Warden.Test
 {
@@ -44,7 +49,7 @@ namespace IronFoundry.Warden.Test
             portManager = Substitute.For<ILocalTcpPortManager>();
             fileSystemManager = Substitute.For<FileSystemManager>();
 
-            jobObject = Substitute.For<JobObject>();
+            jobObject = Substitute.ForPartsOf<JobObject>();
             jobObjectLimits = Substitute.For<JobObjectLimits>(jobObject, TimeSpan.FromMilliseconds(10));
             processHelper = Substitute.For<ProcessHelper>();
             processMonitor = new ProcessMonitor();
@@ -199,7 +204,7 @@ namespace IronFoundry.Warden.Test
                     CreateProcess(si, false))
                 {
                     bool isInJob = false;
-
+                    
                     NativeMethods.IsProcessInJob(p.Handle, jobObject.Handle, out isInJob);
                     Assert.True(isInJob);
                 }
@@ -303,7 +308,7 @@ namespace IronFoundry.Warden.Test
             public GetInfo()
                 : base()
             {
-                CpuStatistics = new Containers.CpuStatistics
+                CpuStatistics = new CpuStatistics
                 {
                     TotalKernelTime = TimeSpan.FromSeconds(1),
                     TotalUserTime = TimeSpan.FromSeconds(2),
@@ -537,88 +542,6 @@ namespace IronFoundry.Warden.Test
                 var ex = Record.Exception(() => containerStub.CopyFileOut("source", "destination"));
 
                 Assert.IsType<ArgumentException>(ex);
-            }
-        }
-
-        public class CreateTarFile : ContainerInitializedContext
-        {
-            [Fact]
-            public void EmptySourcePathThrows()
-            {
-                var ex = Record.Exception(() => containerStub.ExtractTarFile("", @"C:\destination.tar", false));
-                Assert.IsType<InvalidOperationException>(ex);
-            }
-
-            [Fact]
-            public void EmptyTarFilePathThrows()
-            {
-                var ex = Record.Exception(() => containerStub.CreateTarFile("/source", "", false));
-                Assert.IsType<InvalidOperationException>(ex);
-            }
-
-            [Fact]
-            public void TranslatesSourcePath()
-            {
-                containerStub.CreateTarFile("/source", @"C:\destination.tar", false);
-
-                fileSystemManager.Received(x => x.CreateTarFile(Path.Combine(containerDirectory.FullName, "root", "source"), @"C:\destination.tar", false));
-            }
-
-            [Fact]
-            public void DoesNotTranslateTarFilePath()
-            {
-                containerStub.CreateTarFile("/source", @"C:\destination.tar", false);
-
-                fileSystemManager.Received(x => x.CreateTarFile(Path.Combine(containerDirectory.FullName, "root", "source"), @"C:\destination.tar", false));
-            }
-
-            [Fact]
-            public void CreatesTarFile()
-            {
-                containerStub.CreateTarFile("/source", @"C:\destination.tar", false);
-
-                fileSystemManager.Received(x => x.CreateTarFile(Path.Combine(containerDirectory.FullName, "root", "source"), @"C:\destination.tar", false));
-            }
-        }
-
-        public class ExtractTarFile : ContainerInitializedContext
-        {
-            [Fact]
-            public void EmptyTarFilePathThrows()
-            {
-                var ex = Record.Exception(() => containerStub.ExtractTarFile("", "/destination", false));
-                Assert.IsType<InvalidOperationException>(ex);
-            }
-
-            [Fact]
-            public void EmptyDestinationPathThrows()
-            {
-                var ex = Record.Exception(() => containerStub.ExtractTarFile(@"C:\source.tar", "", false));
-                Assert.IsType<InvalidOperationException>(ex);
-            }
-
-            [Fact]
-            public void TranslatesTarFilePath()
-            {
-                containerStub.ExtractTarFile(@"C:\source.tar", "/destination", false);
-
-                fileSystemManager.Received(x => x.ExtractTarFile(@"C:\source.tar", Path.Combine(containerDirectory.FullName, "root", "destination"), false));
-            }
-
-            [Fact]
-            public void TranslatesDestinationPath()
-            {
-                containerStub.ExtractTarFile(@"C:\source.tar", "/destination", false);
-
-                fileSystemManager.Received(x => x.ExtractTarFile(@"C:\source.tar", Path.Combine(containerDirectory.FullName, "root", "destination"), false));
-            }
-
-            [Fact]
-            public void ExtractsTarFile()
-            {
-                containerStub.ExtractTarFile(@"C:\source.tar", "/destination", false);
-
-                fileSystemManager.Received(x => x.ExtractTarFile(@"C:\source.tar", Path.Combine(containerDirectory.FullName, "root", "destination"), false));
             }
         }
 

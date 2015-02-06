@@ -3,10 +3,12 @@ using System.Net;
 using System.Security;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
-using IronFoundry.Warden.Utilities;
+using IronFoundry.Container.Utilities;
 
 namespace IronFoundry.Warden.Containers
 {
+    // BR: Move to IronFoundry.Container
+    // BR: Investigate if we would need this in the host?? User management in the host is problematic...
     public class ContainerUser : IEquatable<ContainerUser>, IContainerUser
     {
         private const string UserPrefix = "warden_";

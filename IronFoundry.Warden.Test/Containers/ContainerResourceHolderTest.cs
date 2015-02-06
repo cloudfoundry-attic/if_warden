@@ -12,6 +12,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using IronFoundry.Container.Utilities;
 
 namespace IronFoundry.Warden.Test
 {
@@ -106,7 +107,7 @@ namespace IronFoundry.Warden.Test
 
                 resourceHolder.Destroy();
 
-                localTcpManager.Received().ReleaseLocalPort(Arg.Any<ushort>(), Arg.Any<string>());
+                localTcpManager.Received().ReleaseLocalPort(Arg.Any<int>(), Arg.Any<string>());
             }
 
             [Fact]
@@ -116,7 +117,7 @@ namespace IronFoundry.Warden.Test
 
                 resourceHolder.Destroy();
 
-                localTcpManager.DidNotReceive().ReleaseLocalPort(Arg.Any<ushort>(), Arg.Any<string>());
+                localTcpManager.DidNotReceive().ReleaseLocalPort(Arg.Any<int>(), Arg.Any<string>());
             }
 
             [Fact]
@@ -132,7 +133,7 @@ namespace IronFoundry.Warden.Test
                 user.Received(1, x => x.Delete());
                 jobObject.Received(1, x => x.TerminateProcessesAndWait(Arg.Any<int>()));
                 jobObject.Received(1, x => x.Dispose());
-                localTcpManager.Received(1, x => x.ReleaseLocalPort(Arg.Any<ushort>(), Arg.Any<string>()));
+                localTcpManager.Received(1, x => x.ReleaseLocalPort(Arg.Any<int>(), Arg.Any<string>()));
             }
 
             [Fact]
@@ -148,14 +149,14 @@ namespace IronFoundry.Warden.Test
                 directory.Received(1, x => x.Delete());
                 jobObject.Received(1, x => x.TerminateProcessesAndWait(Arg.Any<int>()));
                 jobObject.Received(1, x => x.Dispose());
-                localTcpManager.Received(1, x => x.ReleaseLocalPort(Arg.Any<ushort>(), Arg.Any<string>()));
+                localTcpManager.Received(1, x => x.ReleaseLocalPort(Arg.Any<int>(), Arg.Any<string>()));
             }
 
             [Fact]
             public void DeletesOtherResources_WhenReleaseLocalPortThrows()
             {
                 var resourceHolder = new ContainerResourceHolder(handle, user, directory, jobObject, localTcpManager, true);
-                localTcpManager.When(x => x.ReleaseLocalPort(Arg.Any<ushort>(), Arg.Any<string>())).Do(x => { throw new Exception(); });
+                localTcpManager.When(x => x.ReleaseLocalPort(Arg.Any<int>(), Arg.Any<string>())).Do(x => { throw new Exception(); });
 
                 resourceHolder.Destroy();
 

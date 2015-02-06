@@ -4,12 +4,17 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using IronFoundry.Container;
+using IronFoundry.Container.Win32;
 using IronFoundry.Warden.Containers.Messages;
 using IronFoundry.Warden.Tasks;
+using IronFoundry.Container.Utilities;
 using IronFoundry.Warden.Utilities;
 
 namespace IronFoundry.Warden.Containers
 {
+    // BR: Move to IronFoundry.Container.Shared
+    // BR: Might make sense to split the functionality between the library and the host
     public class ContainerStub : IContainer, IDisposable
     {
         const int ExitTimeout = 10000;
@@ -104,20 +109,6 @@ namespace IronFoundry.Warden.Containers
             containerDirectory.BindMounts(mounts);
         }
 
-        public void CreateTarFile(string sourcePath, string tarFilePath, bool compress)
-        {
-            if (String.IsNullOrWhiteSpace(sourcePath))
-                throw new InvalidOperationException("The source path is empty.");
-
-            if (String.IsNullOrWhiteSpace(tarFilePath))
-                throw new InvalidOperationException("The tar file path is empty.");
-
-            var containerSourcePath = ConvertToContainerPath(sourcePath);
-
-            // NOTE: tarFilePath should not be contained within the container.
-            fileSystemManager.CreateTarFile(containerSourcePath, tarFilePath, compress);
-        }
-
         string ConvertToContainerPath(string path)
         {
             // Expect the incoming path to be a unix style path.  The root is relative to the root of the container.
@@ -177,7 +168,7 @@ namespace IronFoundry.Warden.Containers
             fileSystemManager.CopyFile(containerSourcePath, destinationFilePath);
         }
 
-        public Utilities.IProcess CreateProcess(CreateProcessStartInfo si, bool impersonate = false)
+        public IProcess CreateProcess(CreateProcessStartInfo si, bool impersonate = false)
         {
             ThrowIfNotActive();
 
@@ -188,7 +179,7 @@ namespace IronFoundry.Warden.Containers
 
             p.EnableRaisingEvents = true;
 
-            var wrapped = processHelper.WrapProcess(p);
+            var wrapped = ProcessHelper.WrapProcess(p);
             processMonitor.TryAdd(wrapped);
 
             bool started = p.Start();
@@ -200,19 +191,6 @@ namespace IronFoundry.Warden.Containers
             jobObject.AssignProcessToJob(p);
 
             return wrapped;
-        }
-
-        public void ExtractTarFile(string tarFilePath, string destinationPath, bool decompress)
-        {
-            if (String.IsNullOrWhiteSpace(tarFilePath))
-                throw new InvalidOperationException("The tar file path is empty.");
-
-            if (String.IsNullOrWhiteSpace(destinationPath))
-                throw new InvalidOperationException("The destination path is empty.");
-
-            var containerDestinationPath = ConvertToContainerPath(destinationPath);
-
-            fileSystemManager.ExtractTarFile(tarFilePath, containerDestinationPath, decompress);
         }
 
         public async Task<CommandResult> RunCommandAsync(RemoteCommand remoteCommand)

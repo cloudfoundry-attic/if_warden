@@ -9,11 +9,12 @@ using System.Threading.Tasks;
 using IronFoundry.Warden.Configuration;
 using IronFoundry.Warden.Containers;
 using IronFoundry.Warden.Containers.Messages;
-using IronFoundry.Warden.Shared.Messaging;
+using IronFoundry.Container.Messaging;
 using IronFoundry.Warden.Tasks;
 using IronFoundry.Warden.Utilities;
 using logmessage;
 using Newtonsoft.Json.Linq;
+using IronFoundry.Container.Utilities;
 
 namespace IronFoundry.Warden.ContainerHost
 {
@@ -139,16 +140,6 @@ namespace IronFoundry.Warden.ContainerHost
                     return Task.FromResult<object>(new BindMountsResponse(r.id));
                 });
 
-                dispatcher.RegisterMethod<CreateTarFileRequest>(CreateTarFileRequest.MethodName, r =>
-                {
-                    container.CreateTarFile(
-                        r.@params.SourceDirectoryPath,
-                        r.@params.TarFilePath,
-                        r.@params.Compress);
-
-                    return Task.FromResult<object>(new CreateTarFileResponse(r.id));
-                });
-
                 dispatcher.RegisterMethod<ContainerInfoRequest>(ContainerInfoRequest.MethodName, r =>
                 {
                     var info = container.GetInfo();
@@ -201,16 +192,6 @@ namespace IronFoundry.Warden.ContainerHost
                     return Task.FromResult<object>(new CopyFileResponse(r.id));
                 });
 
-                dispatcher.RegisterMethod<ExtractTarFileRequest>(ExtractTarFileRequest.MethodName, r =>
-                {
-                    container.ExtractTarFile(
-                        r.@params.TarFilePath,
-                        r.@params.DestinationDirectoryPath,
-                        r.@params.Decompress);
-
-                    return Task.FromResult<object>(new ExtractTarFileResponse(r.id));
-                });
-
                 dispatcher.RegisterMethod<LimitMemoryRequest>(LimitMemoryRequest.MethodName, (r) =>
                 {
                     container.LimitMemory(r.@params);
@@ -254,15 +235,17 @@ namespace IronFoundry.Warden.ContainerHost
 
                 processMonitor.ErrorDataReceived += (o,e) =>
                 {
-                    var jsonLogEvent = JObject.FromObject(new LogEvent() { MessageType = LogMessage.MessageType.ERR, LogData = e.Data });
+                    var jsonLogEvent = JObject.FromObject(new LogEvent() { MessageType = LogMessageType.STDERR, LogData = e.Data });
                     transport.PublishEventAsync(jsonLogEvent);
                 };
 
                 processMonitor.OutputDataReceived += (o, e) =>
                 {
-                    var jsonLogEvent = JObject.FromObject(new LogEvent() { MessageType = LogMessage.MessageType.OUT, LogData = e.Data });
+                    var jsonLogEvent = JObject.FromObject(new LogEvent() { MessageType = LogMessageType.STDOUT, LogData = e.Data });
                     transport.PublishEventAsync(jsonLogEvent);
                 };
+
+                transport.Start();
 
                 exitEvent.WaitOne();
             }
