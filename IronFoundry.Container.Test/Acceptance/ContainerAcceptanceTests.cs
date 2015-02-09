@@ -116,34 +116,34 @@ namespace IronFoundry.Container.Acceptance
             {
                 Container1 = CreateContainer(Container1Handle);
 
-                var pSpec = new ProcessSpec
+                using (var tempFile = new TempFile(Container1.Directory.UserPath))
                 {
-                    ExecutablePath = "cmd.exe",
-                    DisablePathMapping = true,
-                    Arguments = new string[] { "/C set" },
-                    Environment = new Dictionary<string, string> 
-                    { 
-                        { "PROC_ENV", "VAL1" } 
-                    },
-                };
+                    var pSpec = new ProcessSpec
+                    {
+                        ExecutablePath = "cmd.exe",
+                        DisablePathMapping = true,
+                        Arguments = new string[] {"/C", string.Format("set >\"{0}\"", tempFile.FullName)},
+                        Environment = new Dictionary<string, string>
+                        {
+                            {"PROC_ENV", "VAL1"}
+                        },
+                    };
 
-                // RUN THE SHORT LIVED PROCESS
-                var io = new StringProcessIO();
-                var process = Container1.Run(pSpec, io);
+                    var process = Container1.Run(pSpec, null);
 
-                int exitCode;
-                bool exited = process.TryWaitForExit(2000, out exitCode);
+                    int exitCode;
+                    bool exited = process.TryWaitForExit(2000, out exitCode);
 
-                var output = io.Output.ToString().Trim();
-                var error = io.Error.ToString().Trim();
+                    // VERIFY THE PROCESS RAN AND EXITED
+                    Assert.True(exited);
+                    Assert.Equal(0, exitCode);
 
-                // VERIFY THE PROCESS RAN AND EXITED
-                Assert.True(exited);
-                Assert.Equal(exitCode, 0);
+                    string output = File.ReadAllText(tempFile.FullName);
 
-                // VERIFY THE ENVIRONMENT WAS SET
-                Assert.Contains("CONTAINER_HANDLE=" + Container1.Handle, output);
-                Assert.Contains("PROC_ENV=VAL1", output);
+                    // VERIFY THE ENVIRONMENT WAS SET
+                    Assert.Contains("CONTAINER_HANDLE=" + Container1.Handle, output);
+                    Assert.Contains("PROC_ENV=VAL1", output);
+                }
             }
 
             //[FactAdminRequired]
