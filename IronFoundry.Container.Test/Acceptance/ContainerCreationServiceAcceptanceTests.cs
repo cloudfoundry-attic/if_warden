@@ -203,24 +203,28 @@ cmd.exe /C %*
             [FactAdminRequired]
             public void CanSetEnvironmentVariables()
             {
-                var spec = new ProcessSpec
+                using (TempFile tempFile = new TempFile(Container.Directory.UserPath))
                 {
-                    ExecutablePath = "run.bat",
-                    Arguments = new[] {"set"},
-                    Environment = new Dictionary<string, string>
+                    var spec = new ProcessSpec
                     {
-                        {"FOO", "1"},
-                        {"BAR", "two"}
-                    }
-                };
-                var io = new TestProcessIO();
+                        ExecutablePath = "run.bat",
+                        Arguments = new[] {string.Format("set >\"{0}\"", tempFile.FullName)},
+                        Environment = new Dictionary<string, string>
+                        {
+                            {"FOO", "1"},
+                            {"BAR", "two"}
+                        }
+                    };
+                    var io = new TestProcessIO();
 
-                var process = Container.Run(spec, io);
-                process.WaitForExit();
+                    var process = Container.Run(spec, io);
+                    process.WaitForExit();
 
-                var stdout = io.Output.ToString();
-                Assert.Contains("FOO=1", stdout);
-                Assert.Contains("BAR=two", stdout);
+                    var stdout = File.ReadAllText(tempFile.FullName);
+
+                    Assert.Contains("FOO=1", stdout);
+                    Assert.Contains("BAR=two", stdout);
+                }
             }
         }
     }
