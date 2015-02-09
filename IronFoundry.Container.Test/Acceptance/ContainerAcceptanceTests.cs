@@ -92,21 +92,6 @@ namespace IronFoundry.Container.Acceptance
 
                 Assert.Contains(UserGroupName, groupOutput);
             }
-
-            //[FactAdminRequired(Skip = "Can't implement until we can copy files in.")]
-            //public void DoNotShareSpaces()
-            //{
-            //    var containerService = new ContainerCreationService(ContainerBasePath, UserGroupName);
-
-            //    Container1 = CreateContainer(containerService, Container1Handle);
-            //    Container2 = CreateContainer(containerService, Container2Handle);
-
-            //    Assert.Equal(Container1.Handle, Container1Handle);
-            //    Assert.Equal(Container2.Handle, Container2Handle);
-
-            //    // Copy a file into one container and attempt to copy out from other?
-            //    throw new NotImplementedException();
-            //}
         }
 
         public class Processes : ContainerAcceptanceTests
@@ -145,40 +130,6 @@ namespace IronFoundry.Container.Acceptance
                     Assert.Contains("PROC_ENV=VAL1", output);
                 }
             }
-
-            //[FactAdminRequired]
-            //public void StartAndStopLongRunningProcess()
-            //{
-            //    var containerService = new ContainerCreationService(ContainerBasePath, UserGroupName);
-            //    Container1 = CreateContainer(containerService, Container1Handle);
-            //    var pSpec = new ProcessSpec
-            //    {
-            //        ExecutablePath = "cmd.exe",
-            //        DisablePathMapping = true,
-            //        Arguments = new string[] { @"/C ""FOR /L %% IN () DO ping 127.0.0.1 -n 2""" },
-            //    };
-            //
-            //    // START THE LONG RUNNING PROCESS
-            //    var io = new StringProcessIO();
-            //    var process = Container1.Run(pSpec, io);
-
-            //    int exitCode;
-            //    bool exited = process.TryWaitForExit(500, out exitCode);
-
-            //    // VERIFY IT HASNT EXITED YET
-            //    Assert.False(exited);
-
-            //    var actualProcess = Process.GetProcessById(process.Id);
-
-            //    // KILL THE PROCESS AND WAIT FOR EXIT
-            //    process.Kill();
-            //    exited = process.TryWaitForExit(2000, out exitCode);
-
-            //    // VERIFY THE PROCESS WAS KILLED
-            //    Assert.True(exited);
-            //    Assert.True(actualProcess.HasExited);
-            //    Assert.True(io.Output.ToString().Length > 0);
-            //}
         }
 
         public class Properties : ContainerAcceptanceTests
