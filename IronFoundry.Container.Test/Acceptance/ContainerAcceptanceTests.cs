@@ -53,44 +53,49 @@ namespace IronFoundry.Container.Acceptance
                 Container1 = CreateContainer(Container1Handle);
                 Container2 = CreateContainer(Container2Handle);
 
-                var pSpec = new ProcessSpec
+                using (var c1Output = new TempFile(Container1.Directory.UserPath))
+                using (var c2Output = new TempFile(Container2.Directory.UserPath))
                 {
-                    ExecutablePath = "whoami.exe",
-                    DisablePathMapping = true,
-                    Privileged = false
-                };
+                    var pSpec = new ProcessSpec
+                    {
+                        ExecutablePath = "cmd.exe",
+                        DisablePathMapping = true,
+                        Privileged = false,
+                    };
 
-                var io1 = new StringProcessIO();
-                var io2 = new StringProcessIO();
+                    pSpec.Arguments = new[] { "/C", "whoami.exe", string.Format(">\"{0}\"", c1Output.FullName)};
+                    Container1.Run(pSpec, null).WaitForExit();
 
-                Container1.Run(pSpec, io1).WaitForExit();
-                Container2.Run(pSpec, io2).WaitForExit();
+                    pSpec.Arguments = new[] { "/C", "whoami.exe", string.Format(">\"{0}\"", c2Output.FullName) };
+                    Container2.Run(pSpec, null).WaitForExit();
 
-                var user1 = io1.Output.ToString();
-                var user2 = io2.Output.ToString();
+                    var user1 = c1Output.ReadAllText();
+                    var user2 = c2Output.ReadAllText();
 
-                Assert.NotEmpty(user1);
-                Assert.NotEmpty(user2);
-                Assert.NotEqual(user1, user2);
+                    Assert.NotEmpty(user1);
+                    Assert.NotEmpty(user2);
+                    Assert.NotEqual(user1, user2);
+                }
             }
 
             [FactAdminRequired]
             public void ContainerUserInContainerGroup()
             {
                 Container1 = CreateContainer(Container1Handle);
-
-                var pSpec = new ProcessSpec
+                using (var c1Output = new TempFile(Container1.Directory.UserPath))
                 {
-                    ExecutablePath = "whoami.exe",
-                    DisablePathMapping = true,
-                    Arguments = new string[] { "/GROUPS" }
-                };
+                    var pSpec = new ProcessSpec
+                    {
+                        ExecutablePath = "cmd.exe",
+                        DisablePathMapping = true,
+                        Arguments = new[] { "/C", "whoami.exe", "/GROUPS", string.Format(">\"{0}\"", c1Output.FullName)},
+                    };
 
-                var io = new StringProcessIO();
-                Container1.Run(pSpec, io).WaitForExit();
-                var groupOutput = io.Output.ToString();
+                    Container1.Run(pSpec, null).WaitForExit();
+                    var groupOutput = c1Output.ReadAllText();
 
-                Assert.Contains(UserGroupName, groupOutput);
+                    Assert.Contains(UserGroupName, groupOutput);
+                }
             }
         }
 
