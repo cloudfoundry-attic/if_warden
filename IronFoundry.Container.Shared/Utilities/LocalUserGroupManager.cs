@@ -17,8 +17,10 @@ namespace IronFoundry.Container.Utilities
 
                 try
                 {
-                    DirectoryEntry group = children.Find(groupName);
-                    if (group != null) return;
+                    using (DirectoryEntry group = children.Find(groupName))
+                    {
+                        if (group != null) return;
+                    }
                 }
                 catch (COMException)
                 {
@@ -36,8 +38,10 @@ namespace IronFoundry.Container.Utilities
             {
                 DirectoryEntries children = localDirectory.Children;
 
-                DirectoryEntry group = children.Find(groupName);
-                children.Remove(group);
+                using (DirectoryEntry group = children.Find(groupName))
+                {
+                    children.Remove(group);
+                }
             }
         }
     }

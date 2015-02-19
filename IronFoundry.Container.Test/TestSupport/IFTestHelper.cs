@@ -35,9 +35,9 @@ public static class IFTestHelper
             RedirectStandardError = true,
             RedirectStandardOutput = true,
             RedirectStandardInput = true,
-            CreateNoWindow = false,
             WorkingDirectory = Directory.GetCurrentDirectory(),
             UseShellExecute = false,
+            CreateNoWindow = true,
         };
 
         return Process.Start(startInfo);

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using Xunit;
 
@@ -6,12 +7,25 @@ namespace IronFoundry.Container.Utilities
 {
     public class ProcessHelperTest
     {
-        public class GetProcessById
+        public ProcessStartInfo CmdExeStartInfo { get; set; }
+
+        public ProcessHelperTest()
+        {
+            CmdExeStartInfo = new ProcessStartInfo("cmd.exe")
+            {
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                WorkingDirectory = Environment.SystemDirectory,
+            };
+        }
+        
+
+        public class GetProcessById : ProcessHelperTest
         {
             [Fact]
             public void WhenProcessIsValid_ReturnsProcess()
             {
-                Process p = Process.Start("cmd.exe");
+                Process p = Process.Start(CmdExeStartInfo);
                 try
                 {
                     var processHelper = new ProcessHelper();
@@ -38,15 +52,15 @@ namespace IronFoundry.Container.Utilities
             }
         }
 
-        public class GetProcesses
+        public class GetProcesses : ProcessHelperTest
         {
             [Fact]
             public void ReturnsProcesses()
             {
                 var processes = new []
                 {
-                    Process.Start("cmd.exe"),
-                    Process.Start("cmd.exe"),
+                    Process.Start(CmdExeStartInfo),
+                    Process.Start(CmdExeStartInfo),
                 };
 
                 try
@@ -72,8 +86,8 @@ namespace IronFoundry.Container.Utilities
             {
                 var processes = new[]
                 {
-                    Process.Start("cmd.exe"),
-                    Process.Start("cmd.exe"),
+                    Process.Start(CmdExeStartInfo),
+                    Process.Start(CmdExeStartInfo),
                 };
 
                 try

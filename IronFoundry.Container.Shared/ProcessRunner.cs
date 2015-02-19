@@ -61,6 +61,7 @@ namespace IronFoundry.Container
                 RedirectStandardError = true,
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
+                CreateNoWindow = true,
             };
 
             if (runSpec.Credentials != null)

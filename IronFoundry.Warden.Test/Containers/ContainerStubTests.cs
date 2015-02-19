@@ -229,19 +229,20 @@ namespace IronFoundry.Warden.Test
             [Fact]
             public void StartsProcessWithEnvironmentVariables()
             {
-                var tempFile = Path.Combine(tempDirectory, Guid.NewGuid().ToString());
-
-                var si = new CreateProcessStartInfo("cmd.exe", string.Format(@"/C set > {0}", tempFile));
-                si.EnvironmentVariables["FOO"] = "BAR";
-                si.EnvironmentVariables["FOO2"] = "SNAFU";
-
-                using (var p = containerStub.CreateProcess(si))
+                using (var tempFile = new TempFile(tempDirectory))
                 {
-                    WaitForGoodExit(p);
+                    var si = new CreateProcessStartInfo("cmd.exe", string.Format(@"/C set > {0}", tempFile.FullName));
+                    si.EnvironmentVariables["FOO"] = "BAR";
+                    si.EnvironmentVariables["FOO2"] = "SNAFU";
 
-                    var output = File.ReadAllText(tempFile);
-                    Assert.Contains("BAR", output);
-                    Assert.Contains("SNAFU", output);
+                    using (var p = containerStub.CreateProcess(si))
+                    {
+                        WaitForGoodExit(p);
+
+                        var output = File.ReadAllText(tempFile.FullName);
+                        Assert.Contains("BAR", output);
+                        Assert.Contains("SNAFU", output);
+                    }
                 }
             }
 

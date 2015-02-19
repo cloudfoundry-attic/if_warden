@@ -53,60 +53,50 @@ namespace IronFoundry.Container.Acceptance
                 Container1 = CreateContainer(Container1Handle);
                 Container2 = CreateContainer(Container2Handle);
 
-                var pSpec = new ProcessSpec
+                using (var c1Output = new TempFile(Container1.Directory.UserPath))
+                using (var c2Output = new TempFile(Container2.Directory.UserPath))
                 {
-                    ExecutablePath = "whoami.exe",
-                    DisablePathMapping = true,
-                    Privileged = false
-                };
+                    var pSpec = new ProcessSpec
+                    {
+                        ExecutablePath = "cmd.exe",
+                        DisablePathMapping = true,
+                        Privileged = false,
+                    };
 
-                var io1 = new StringProcessIO();
-                var io2 = new StringProcessIO();
+                    pSpec.Arguments = new[] { "/C", "whoami.exe", string.Format(">\"{0}\"", c1Output.FullName)};
+                    Container1.Run(pSpec, null).WaitForExit();
 
-                Container1.Run(pSpec, io1).WaitForExit();
-                Container2.Run(pSpec, io2).WaitForExit();
+                    pSpec.Arguments = new[] { "/C", "whoami.exe", string.Format(">\"{0}\"", c2Output.FullName) };
+                    Container2.Run(pSpec, null).WaitForExit();
 
-                var user1 = io1.Output.ToString();
-                var user2 = io2.Output.ToString();
+                    var user1 = c1Output.ReadAllText();
+                    var user2 = c2Output.ReadAllText();
 
-                Assert.NotEmpty(user1);
-                Assert.NotEmpty(user2);
-                Assert.NotEqual(user1, user2);
+                    Assert.NotEmpty(user1);
+                    Assert.NotEmpty(user2);
+                    Assert.NotEqual(user1, user2);
+                }
             }
 
             [FactAdminRequired]
             public void ContainerUserInContainerGroup()
             {
                 Container1 = CreateContainer(Container1Handle);
-
-                var pSpec = new ProcessSpec
+                using (var c1Output = new TempFile(Container1.Directory.UserPath))
                 {
-                    ExecutablePath = "whoami.exe",
-                    DisablePathMapping = true,
-                    Arguments = new string[] { "/GROUPS" }
-                };
+                    var pSpec = new ProcessSpec
+                    {
+                        ExecutablePath = "cmd.exe",
+                        DisablePathMapping = true,
+                        Arguments = new[] { "/C", "whoami.exe", "/GROUPS", string.Format(">\"{0}\"", c1Output.FullName)},
+                    };
 
-                var io = new StringProcessIO();
-                Container1.Run(pSpec, io).WaitForExit();
-                var groupOutput = io.Output.ToString();
+                    Container1.Run(pSpec, null).WaitForExit();
+                    var groupOutput = c1Output.ReadAllText();
 
-                Assert.Contains(UserGroupName, groupOutput);
+                    Assert.Contains(UserGroupName, groupOutput);
+                }
             }
-
-            //[FactAdminRequired(Skip = "Can't implement until we can copy files in.")]
-            //public void DoNotShareSpaces()
-            //{
-            //    var containerService = new ContainerCreationService(ContainerBasePath, UserGroupName);
-
-            //    Container1 = CreateContainer(containerService, Container1Handle);
-            //    Container2 = CreateContainer(containerService, Container2Handle);
-
-            //    Assert.Equal(Container1.Handle, Container1Handle);
-            //    Assert.Equal(Container2.Handle, Container2Handle);
-
-            //    // Copy a file into one container and attempt to copy out from other?
-            //    throw new NotImplementedException();
-            //}
         }
 
         public class Processes : ContainerAcceptanceTests
@@ -116,69 +106,35 @@ namespace IronFoundry.Container.Acceptance
             {
                 Container1 = CreateContainer(Container1Handle);
 
-                var pSpec = new ProcessSpec
+                using (var tempFile = new TempFile(Container1.Directory.UserPath))
                 {
-                    ExecutablePath = "cmd.exe",
-                    DisablePathMapping = true,
-                    Arguments = new string[] { "/C set" },
-                    Environment = new Dictionary<string, string> 
-                    { 
-                        { "PROC_ENV", "VAL1" } 
-                    },
-                };
+                    var pSpec = new ProcessSpec
+                    {
+                        ExecutablePath = "cmd.exe",
+                        DisablePathMapping = true,
+                        Arguments = new string[] {"/C", string.Format("set >\"{0}\"", tempFile.FullName)},
+                        Environment = new Dictionary<string, string>
+                        {
+                            {"PROC_ENV", "VAL1"}
+                        },
+                    };
 
-                // RUN THE SHORT LIVED PROCESS
-                var io = new StringProcessIO();
-                var process = Container1.Run(pSpec, io);
+                    var process = Container1.Run(pSpec, null);
 
-                int exitCode;
-                bool exited = process.TryWaitForExit(2000, out exitCode);
+                    int exitCode;
+                    bool exited = process.TryWaitForExit(2000, out exitCode);
 
-                var output = io.Output.ToString().Trim();
-                var error = io.Error.ToString().Trim();
+                    // VERIFY THE PROCESS RAN AND EXITED
+                    Assert.True(exited);
+                    Assert.Equal(0, exitCode);
 
-                // VERIFY THE PROCESS RAN AND EXITED
-                Assert.True(exited);
-                Assert.Equal(exitCode, 0);
+                    string output = File.ReadAllText(tempFile.FullName);
 
-                // VERIFY THE ENVIRONMENT WAS SET
-                Assert.Contains("CONTAINER_HANDLE=" + Container1.Handle, output);
-                Assert.Contains("PROC_ENV=VAL1", output);
+                    // VERIFY THE ENVIRONMENT WAS SET
+                    Assert.Contains("CONTAINER_HANDLE=" + Container1.Handle, output);
+                    Assert.Contains("PROC_ENV=VAL1", output);
+                }
             }
-
-            //[FactAdminRequired]
-            //public void StartAndStopLongRunningProcess()
-            //{
-            //    var containerService = new ContainerCreationService(ContainerBasePath, UserGroupName);
-            //    Container1 = CreateContainer(containerService, Container1Handle);
-            //    var pSpec = new ProcessSpec
-            //    {
-            //        ExecutablePath = "cmd.exe",
-            //        DisablePathMapping = true,
-            //        Arguments = new string[] { @"/C ""FOR /L %% IN () DO ping 127.0.0.1 -n 2""" },
-            //    };
-            //
-            //    // START THE LONG RUNNING PROCESS
-            //    var io = new StringProcessIO();
-            //    var process = Container1.Run(pSpec, io);
-
-            //    int exitCode;
-            //    bool exited = process.TryWaitForExit(500, out exitCode);
-
-            //    // VERIFY IT HASNT EXITED YET
-            //    Assert.False(exited);
-
-            //    var actualProcess = Process.GetProcessById(process.Id);
-
-            //    // KILL THE PROCESS AND WAIT FOR EXIT
-            //    process.Kill();
-            //    exited = process.TryWaitForExit(2000, out exitCode);
-
-            //    // VERIFY THE PROCESS WAS KILLED
-            //    Assert.True(exited);
-            //    Assert.True(actualProcess.HasExited);
-            //    Assert.True(io.Output.ToString().Length > 0);
-            //}
         }
 
         public class Properties : ContainerAcceptanceTests
@@ -319,23 +275,5 @@ namespace IronFoundry.Container.Acceptance
 
             return handle;
         }
-    }
-
-    internal class StringProcessIO : IProcessIO
-    {
-        public StringWriter Error = new StringWriter();
-        public StringWriter Output = new StringWriter();
-
-        public TextWriter StandardOutput
-        {
-            get { return Output; }
-        }
-
-        public TextWriter StandardError
-        {
-            get { return Error; }
-        }
-
-        public TextReader StandardInput { get; set; }
     }
 }
