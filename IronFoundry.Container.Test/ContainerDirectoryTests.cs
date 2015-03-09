@@ -36,7 +36,7 @@ namespace IronFoundry.Container
             }
 
             [Fact]
-            public void CreatesContainerDirectoryWithAdminPermissions()
+            public void CreatesContainerDirectoryWithUserReadOnlyPermissions()
             {
                 IEnumerable<UserAccess> userAccess = null;
                 FileSystem.CreateDirectory(
@@ -48,14 +48,21 @@ namespace IronFoundry.Container
 
                 Assert.NotNull(directory);
                 Assert.Collection(userAccess,
-                    x => {
+                    x =>
+                    {
                         Assert.Equal(@"BUILTIN\Administrators", x.UserName);
                         Assert.Equal(FileAccess.ReadWrite, x.Access);
                     },
-                    x => {
+                    x =>
+                    {
                         Assert.NotEmpty(x.UserName);
                         Assert.Equal(WindowsIdentity.GetCurrent().Name, x.UserName);
                         Assert.Equal(FileAccess.ReadWrite, x.Access);
+                    },
+                    x =>
+                    {
+                        Assert.Equal("username", x.UserName);
+                        Assert.Equal(FileAccess.Read, x.Access);
                     });
             }
 
@@ -185,8 +192,8 @@ namespace IronFoundry.Container
 
         public class MapPrivatePath : ContainerDirectoryTests
         {
-            [InlineData("/", @"C:\Containers\handle\")]
-            [InlineData("/path/to/data", @"C:\Containers\handle\path\to\data")]
+            [InlineData("/", @"C:\Containers\handle\private\")]
+            [InlineData("/path/to/data", @"C:\Containers\handle\private\path\to\data")]
             [Theory]
             public void MapsRootedPathRelativeToContainerRootPath(string containerPath, string expectedMappedPath)
             {
@@ -200,7 +207,7 @@ namespace IronFoundry.Container
             {
                 var mappedPath = Directory.MapPrivatePath("/path/to/data");
 
-                Assert.Equal(@"C:\Containers\handle\path\to\data", mappedPath);
+                Assert.Equal(@"C:\Containers\handle\private\path\to\data", mappedPath);
             }
 
             [Fact]
@@ -208,7 +215,7 @@ namespace IronFoundry.Container
             {
                 var mappedPath = Directory.MapPrivatePath("/path/to/../../data");
 
-                Assert.Equal(@"C:\Containers\handle\data", mappedPath);
+                Assert.Equal(@"C:\Containers\handle\private\data", mappedPath);
             }
 
             [InlineData("/data/../..")]
