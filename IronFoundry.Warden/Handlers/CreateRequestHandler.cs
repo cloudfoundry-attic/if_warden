@@ -1,16 +1,16 @@
-﻿using IronFoundry.Container;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using IronFoundry.Warden.Configuration;
+using IronFoundry.Warden.Containers;
+using IronFoundry.Warden.Protocol;
+using IronFoundry.Warden.Utilities;
+using IronFrame;
+using NLog;
 
 namespace IronFoundry.Warden.Handlers
 {
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Containers;
-    using IronFoundry.Warden.Configuration;
-    using IronFoundry.Warden.Utilities;
-    using NLog;
-    using Protocol;
 
     // MO: Added to ContainerClient
     public class CreateRequestHandler : ContainerRequestHandler
@@ -24,10 +24,10 @@ namespace IronFoundry.Warden.Handlers
             this.request = (CreateRequest)request;
         }
 
-        static IEnumerable<IronFoundry.Container.BindMount> GetBindMounts(CreateRequest request)
+        static IEnumerable<BindMount> GetBindMounts(CreateRequest request)
         {
             return request.BindMounts.Select(
-                x => new IronFoundry.Container.BindMount
+                x => new BindMount
                 {
                     SourcePath = x.SrcPath,
                     DestinationPath = x.DstPath,

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using IronFoundry.Container;
+using IronFrame;
 using IronFoundry.Warden.Tasks;
 using IronFoundry.Warden.Utilities;
 
@@ -12,7 +12,7 @@ namespace IronFoundry.Warden.Containers
     internal sealed class ContainerClient : IContainerClient
     {
         private const string RootPrefix = "@ROOT@";
-        private readonly IronFoundry.Container.IContainerService containerService;
+        private readonly IContainerService containerService;
         private readonly FileSystemManager fileSystem;
         private readonly IContainer container;
         

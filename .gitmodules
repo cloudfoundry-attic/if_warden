@@ -1,3 +1,6 @@
 [submodule "IronFoundry.Warden.Protocol/warden"]
 	path = IronFoundry.Warden.Protocol/warden
 	url = https://github.com/IronFoundry/warden.git
+[submodule "IronFrame"]
+	path = IronFrame
+	url = https://github.com/cloudfoundry-incubator/IronFrame
