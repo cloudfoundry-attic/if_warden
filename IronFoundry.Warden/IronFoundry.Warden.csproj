@@ -140,13 +140,13 @@
     <Compile Include="Containers\WardenException.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IronFoundry.Container\IronFoundry.Container.csproj">
-      <Project>{5de07f79-b758-4a04-b908-626e7577313e}</Project>
-      <Name>IronFoundry.Container</Name>
-    </ProjectReference>
     <ProjectReference Include="..\IronFoundry.Warden.Protocol\IronFoundry.Warden.Protocol.csproj">
       <Project>{ddd0537b-4afe-4beb-bf30-4df0a5367a18}</Project>
       <Name>IronFoundry.Warden.Protocol</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IronFrame\IronFrame\IronFrame.csproj">
+      <Project>{5de07f79-b758-4a04-b908-626e7577313e}</Project>
+      <Name>IronFrame</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

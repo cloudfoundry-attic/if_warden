@@ -13,17 +13,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronFoundry.Warden.Service"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronFoundry.Warden.Test", "IronFoundry.Warden.Test\IronFoundry.Warden.Test.csproj", "{4FFC5E57-59AB-4631-92B9-484F0353E931}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronFoundry.Container.Shared", "IronFoundry.Container.Shared\IronFoundry.Container.Shared.csproj", "{CB7BA555-21FD-4C57-A629-A925B6A83A31}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IronFrame", "IronFrame", "{CFFE15FC-1705-4ABC-929F-C4AD1B85BFCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronFoundry.Container.TestHelper", "IronFoundry.Container.TestHelper\IronFoundry.Container.TestHelper.csproj", "{AB96DA85-8C4E-490B-B552-3FE9F0E0E9BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronFrame.Shared", "IronFrame\IronFrame.Shared\IronFrame.Shared.csproj", "{CB7BA555-21FD-4C57-A629-A925B6A83A31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronFoundry.Container", "IronFoundry.Container\IronFoundry.Container.csproj", "{5DE07F79-B758-4A04-B908-626E7577313E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronFrame.Host", "IronFrame\IronFrame.Host\IronFrame.Host.csproj", "{6E4DD8FC-91E8-4C70-946D-4C37DF84C8CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronFoundry.Container.Test", "IronFoundry.Container.Test\IronFoundry.Container.Test.csproj", "{0C0513EF-3C40-44F7-AE1D-A0709B65B082}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronFrame.TestHelper", "IronFrame\IronFrame.TestHelper\IronFrame.TestHelper.csproj", "{AB96DA85-8C4E-490B-B552-3FE9F0E0E9BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronFoundry.Container.Host", "IronFoundry.Container.Host\IronFoundry.Container.Host.csproj", "{6E4DD8FC-91E8-4C70-946D-4C37DF84C8CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronFrame", "IronFrame\IronFrame\IronFrame.csproj", "{5DE07F79-B758-4A04-B908-626E7577313E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronFoundry.Container.Acceptance.Test", "IronFoundry.Container.Acceptance.Test\IronFoundry.Container.Acceptance.Test.csproj", "{95081EA9-CA53-4B69-8213-1AF5F30C2EA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronFrame.Test", "IronFrame\IronFrame.Test\IronFrame.Test.csproj", "{0C0513EF-3C40-44F7-AE1D-A0709B65B082}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronFrame.Acceptance.Test", "IronFrame\IronFrame.Acceptance.Test\IronFrame.Acceptance.Test.csproj", "{95081EA9-CA53-4B69-8213-1AF5F30C2EA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{CB7BA555-21FD-4C57-A629-A925B6A83A31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB7BA555-21FD-4C57-A629-A925B6A83A31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB7BA555-21FD-4C57-A629-A925B6A83A31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E4DD8FC-91E8-4C70-946D-4C37DF84C8CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E4DD8FC-91E8-4C70-946D-4C37DF84C8CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E4DD8FC-91E8-4C70-946D-4C37DF84C8CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E4DD8FC-91E8-4C70-946D-4C37DF84C8CF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AB96DA85-8C4E-490B-B552-3FE9F0E0E9BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AB96DA85-8C4E-490B-B552-3FE9F0E0E9BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB96DA85-8C4E-490B-B552-3FE9F0E0E9BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -67,10 +73,6 @@ Global
 		{0C0513EF-3C40-44F7-AE1D-A0709B65B082}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C0513EF-3C40-44F7-AE1D-A0709B65B082}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C0513EF-3C40-44F7-AE1D-A0709B65B082}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6E4DD8FC-91E8-4C70-946D-4C37DF84C8CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E4DD8FC-91E8-4C70-946D-4C37DF84C8CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E4DD8FC-91E8-4C70-946D-4C37DF84C8CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E4DD8FC-91E8-4C70-946D-4C37DF84C8CF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{95081EA9-CA53-4B69-8213-1AF5F30C2EA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{95081EA9-CA53-4B69-8213-1AF5F30C2EA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95081EA9-CA53-4B69-8213-1AF5F30C2EA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -78,5 +80,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CB7BA555-21FD-4C57-A629-A925B6A83A31} = {CFFE15FC-1705-4ABC-929F-C4AD1B85BFCD}
+		{6E4DD8FC-91E8-4C70-946D-4C37DF84C8CF} = {CFFE15FC-1705-4ABC-929F-C4AD1B85BFCD}
+		{AB96DA85-8C4E-490B-B552-3FE9F0E0E9BF} = {CFFE15FC-1705-4ABC-929F-C4AD1B85BFCD}
+		{5DE07F79-B758-4A04-B908-626E7577313E} = {CFFE15FC-1705-4ABC-929F-C4AD1B85BFCD}
+		{0C0513EF-3C40-44F7-AE1D-A0709B65B082} = {CFFE15FC-1705-4ABC-929F-C4AD1B85BFCD}
+		{95081EA9-CA53-4B69-8213-1AF5F30C2EA1} = {CFFE15FC-1705-4ABC-929F-C4AD1B85BFCD}
 	EndGlobalSection
 EndGlobal

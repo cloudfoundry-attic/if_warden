@@ -11,6 +11,12 @@ set MSBUILD=%FrameworkDir%%FrameworkVersion%\msbuild.exe
 
 if not exist %MSBUILD% goto Error_NoMsBuild
 
+set IRONFRAME=%~dp0IronFrame
+if not exist %IRONFRAME% goto Error_NoIronFrame
+
+call %IRONFRAME%\build.bat %*
+if errorlevel 1 goto Error_BuildFailed
+
 set TARGET=%1
 if (%TARGET%)==() set TARGET=Default
 
@@ -34,6 +40,12 @@ exit /b 1
 
 :Error_NoMsBuild
 echo.
-echo. ERROR: Unable to locate MSBuild.exe (expected location: %MSBUILD%)
+echo ERROR: Unable to locate MSBuild.exe (expected location: %MSBUILD%)
+echo.
+exit /b 1
+
+:Error_NoIronFrame
+echo.
+echo ERROR: Unable to locate the IronFrame submodule (expected location: %IRONFRAME%). Make sure the submodule is updated.
 echo.
 exit /b 1

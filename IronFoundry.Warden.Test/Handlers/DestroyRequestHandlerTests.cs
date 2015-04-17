@@ -1,11 +1,7 @@
 ﻿using IronFoundry.Warden.Containers;
 using IronFoundry.Warden.Protocol;
+using IronFrame;
 using NSubstitute;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace IronFoundry.Warden.Handlers
@@ -26,7 +22,7 @@ namespace IronFoundry.Warden.Handlers
         [Fact]
         public async void RequestsDestroyContainerFromManager()
         {
-            container.GetInfoAsync().ReturnsTask(new Container.ContainerInfo() { State = IronFoundry.Container.ContainerState.Active });
+            container.GetInfoAsync().ReturnsTask(new ContainerInfo() { State = ContainerState.Active });
 
             var request = new DestroyRequest()
             {

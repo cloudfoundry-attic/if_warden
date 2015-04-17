@@ -1,9 +1,9 @@
-﻿namespace IronFoundry.Container
-{
-    using System;
-    using System.Runtime.Serialization;
-    using System.Text;
+﻿using System;
+using System.Runtime.Serialization;
+using System.Text;
 
+namespace IronFoundry.Warden.Containers
+{
     [Serializable]
     public sealed class WardenException : Exception, ISerializable
     {

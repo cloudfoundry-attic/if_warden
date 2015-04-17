@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using IronFoundry.Container;
+using IronFrame;
 using IronFoundry.Warden.Utilities;
 using NLog;
 
@@ -50,7 +50,7 @@ namespace IronFoundry.Warden.Containers
             if (Directory.Exists(containerRoot))
             {
                 var fileSystem = new FileSystemManager();
-                var containerService = ContainerService.RestoreFromContainerBasePath(containerRoot, wardenUsersGroup);
+                var containerService = ContainerService.Warden_RestoreFromContainerBasePath(containerRoot, wardenUsersGroup);
 
                 var containers = containerService.GetContainers();
 
